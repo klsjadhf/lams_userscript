@@ -4,7 +4,7 @@
 // @version      0.1
 // @description  change lams video speed and download video button
 // @author       You
-// @match        https://lams.ntu.edu.sg/lams/tool/lanb11/learning/learner.do*
+// @match        http*://presentur.ntu.edu.sg/aculearn-idm/v8/studio/embed.asp*
 // @grant        none
 // ==/UserScript==
 
@@ -12,4 +12,5 @@
     'use strict';
 
     alert("working");
+    document.querySelector("#div_index").innerHTML = "";
 })();
