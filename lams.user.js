@@ -34,21 +34,30 @@
         //video
         if(document.querySelector("#Video1_html5_api") !== null){
             document.querySelector("#Video1_html5_api").addEventListener("canplay",video1Onload);
-
-            //console.log(document.querySelector("#Video1_html5_api").src);
-            if(document.querySelector("#Video1_html5_api").src.length !== 0){
-                //console.log("video1 src: " + document.querySelector("#Video1_html5_api").src);
-            }
-            //alert(document.querySelector("#Video1_html5_api").src);
         }
     });
     observer.observe(document, {childList: true, subtree: true});
 
     function video1Onload(){
+        var video1Src = "";
+
         console.log("video1 can play");
+        
         if(document.querySelector("#Video1_html5_api").src.length !== 0){
-            console.log("video1 src: " + document.querySelector("#Video1_html5_api").src);
+            video1Src = document.querySelector("#Video1_html5_api").src;
+            console.log("video1 src: " + video1Src);
         }
+
+        //download video button
+        var videoSrcBtn = document.createElement("button");
+        videoSrcBtn.id = "videoSrcBtn";
+        videoSrcBtn.style.position = "relative";
+        videoSrcBtn.style.zIndex = "10";
+        videoSrcBtn.innerHTML = "open";
+        videoSrcBtn.addEventListener("click", function(){
+            window.open(video1Src, '_blank');
+        });
+        document.querySelector("body").appendChild(videoSrcBtn);
     }
 })();
 
@@ -59,4 +68,7 @@ var arv_rate_list
 set_arvRate(player);
 function set_arvRate(player)
 hideIndeximg()
+
+btn zindex 10
+position relative
 */
