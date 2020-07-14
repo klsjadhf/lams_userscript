@@ -48,16 +48,39 @@
             console.log("video1 src: " + video1Src);
         }
 
+        //add container for buttons
+        var buttonContainer = document.createElement("div");
+        buttonContainer.id = "buttonContainer";
+        buttonContainer.style = `
+            position: absolute;
+            z-index: 10;
+            bottom: 30px;
+            right: 0px;
+        `;
+        document.querySelector("body").appendChild(buttonContainer);
+
+        var buttonCSS = `
+            background: none;
+            color: white;
+            border: 0;
+            opacity: 50%;
+        `;
+
         //download video button
         var videoSrcBtn = document.createElement("button");
         videoSrcBtn.id = "videoSrcBtn";
-        videoSrcBtn.style.position = "relative";
-        videoSrcBtn.style.zIndex = "10";
+        videoSrcBtn.style = buttonCSS;
+        // videoSrcBtn.style = `
+        //     position: absolute;
+        //     z-index: 10;
+        // `;
+        // videoSrcBtn.style.position = "relative";
+        // videoSrcBtn.style.zIndex = "10";
         videoSrcBtn.innerHTML = "open";
         videoSrcBtn.addEventListener("click", function(){
             window.open(video1Src, '_blank');
         });
-        document.querySelector("body").appendChild(videoSrcBtn);
+        buttonContainer.appendChild(videoSrcBtn);
     }
 })();
 
