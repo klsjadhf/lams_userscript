@@ -29,24 +29,6 @@
         }
     });
     observer.observe(document, {childList: true, subtree: true});
-    // var checkElementTimer = window.setInterval(function(){
-    //     if(document.querySelector("#div_index").visibility == "hidden"){
-    //         alert("div index loaded");
-    //         window.clearInterval(checkElementTimer);
-    //     }
-    //     else{
-    //         console.log("div index not found "+document.querySelector("#div_index").style)
-    //     }
-    // }, 500);
-
-    // document.querySelector("#div_index").style.width = "0px";
-    // console.log(document.querySelector("#div_index"));
-
-    // document.addEventListener("loadeddata", function(){
-    //     document.querySelector("#div_index").style.width = "0px";
-    //     alert("change width");
-    //     //document.querySelector("#div_index").style = "";
-    // });
 })();
 /*
 localStorage.getItem('arvplayer-playbackRate');
