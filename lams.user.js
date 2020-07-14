@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         lams
-// @namespace    http://tampermonkey.net/
+// @namespace    https://github.com/klsjadhf/lams_userscript
 // @version      0.23
 // @description  change lams video speed and download video button
 // @author       klsjadhf
@@ -22,50 +22,26 @@
 (function() {
     'use strict'
 
-    console.log("tampermonkey script running");
+    GM_listValues();
 
-    // if(document.URL.match(/https:\/\/lams.ntu.edu.sg\/lams\/tool\/lanb11\/learning\/learner.do/)){
-    //     console.log(window.location.hostname);
-    //     var videoNamePath = "#navcontent > div > div > div > div > div > div > div > div > strong > span > span"
-    //     var videoNameElem = document.querySelector(videoNamePath);
-    //     document.addEventListener("load", function(){
-    //         videoNameElem.id = "videoName";
-    //         console.log(videoNameElem);
-    //         // window.setTimeout(function(){console.log(videoNameElem);}, 1000);
-    //     });
-    // }
-
-
+    console.log("tampermonkey script running on " + window.location.hostname);
 
     var observer = new MutationObserver(function(){
         //console.log("DOM changed");
 
-        // console.log(window.location.hostname);
-        // console.log(document.URL.match(/https:\/\/presentur.ntu.edu.sg/));
-
-        if(document.URL.match(/https:\/\/lams.ntu.edu.sg\/lams\/tool\/lanb11\/learning\/learner.do/)){
-            console.log(window.location.hostname);
+        //get video name from main site
+        if(document.URL.match(/https:\/\/lams\.ntu\.edu\.sg\/lams\/tool\/lanb11\/learning\/learner\.do/)){
+            // console.log(document.URL.match(/https:\/\/lams.ntu.edu.sg\/lams\/tool\/lanb11\/learning\/learner.do*/));
             var videoNamePath = ".panel-body > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > strong:nth-child(1) > span:nth-child(1) > span:nth-child(1)"
             var videoNameElem = document.querySelector(videoNamePath);
-            // new MutationObserver(function(){
-
-            // }).observe(videoNameElem, {subtree: true, childList: true});
-            // document.addEventListener("DOMContentLoaded", function(){
-            //     console.log(videoNameElem.style);
-            //     videoNameElem.style.backgroundcolor = "black";
-            // });
             if( videoNameElem !== null){
+                GM_setValue("videoName", videoNameElem.textContent);
                 console.log(videoNameElem.textContent);
-                console.log("videoName not null");
-                // if(document.querySelector("#div_index").style.width === "100%"){
-                //     document.querySelector("#div_index").style.width = "0px";
-                // }
             }
         }
 
-        //for video player
-        // if(window.location.hostname === "presentur.ntu.edu.sg"){
-        if(document.URL.match(/https:\/\/presentur.ntu.edu.sg\/aculearn-idm\/v8\/studio\/embed.asp/)){
+        //for video player in iframe
+        else if(document.URL.match(/https:\/\/presentur\.ntu\.edu\.sg\/aculearn-idm\/v8\/studio\/embed\.asp/)){
             //remove annoying box
             if(document.querySelector("#div_index") !== null){
                 // console.log(document.querySelector("#div_index").style.width);
@@ -84,13 +60,31 @@
 
     function video1Onload(){
         var video1Src = "";
+        var videoName = GM_getValue("videoName", "video.mp4")
 
-        console.log("video1 can play");
+        console.log(videoName.indexOf(":"));
+        // var newStr = videoName.slice(0, videoName.indexOf(":"));
+        // newStr += videoName.slice(videoName.indexOf(":")+1, videoName.length);
+        // videoName = newStr
+        // console.log(parseInt(videoName.slice(0, videoName.indexOf(":"))));
+
+        while(videoName.indexOf(":") !== -1){ //remove colons
+            var newStr = videoName.slice(0, videoName.indexOf(":"));
+            newStr += videoName.slice(videoName.indexOf(":")+1, videoName.length);
+            videoName = newStr
+        }
+        videoName += ".mp4";
+        // videoName = videoName.slice(0, 50);
         
-        if(document.querySelector("#Video1_html5_api").src.length !== 0){
+        console.log("video1 can play");
+
+        console.log(videoName);
+        console.log(unsafeWindow.hideIndeximg);
+        
+        // if(document.querySelector("#Video1_html5_api").src.length !== 0){
             video1Src = document.querySelector("#Video1_html5_api").src;
             console.log("video1 src: " + video1Src);
-        }
+        // }
 
         //add container for buttons
         var buttonContainer = document.createElement("div");
@@ -134,7 +128,7 @@
         videoSrcBtn2.innerHTML = "btn2";
         videoSrcBtn2.addEventListener("click", function(){
             // GM_download(video1Src, "video");
-            GM_download({url:video1Src, name:"video.mp4"});
+            GM_download({url:video1Src, name:videoName});
             // window.open("https://ntume22.ntu.edu.sg", '_self');
             // var downloadLink = document.createElement("a");
             // downloadLink.setAttribute("href", video1Src);
