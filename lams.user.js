@@ -24,12 +24,44 @@
 
     console.log("tampermonkey script running");
 
+    // if(document.URL.match(/https:\/\/lams.ntu.edu.sg\/lams\/tool\/lanb11\/learning\/learner.do/)){
+    //     console.log(window.location.hostname);
+    //     var videoNamePath = "#navcontent > div > div > div > div > div > div > div > div > strong > span > span"
+    //     var videoNameElem = document.querySelector(videoNamePath);
+    //     document.addEventListener("load", function(){
+    //         videoNameElem.id = "videoName";
+    //         console.log(videoNameElem);
+    //         // window.setTimeout(function(){console.log(videoNameElem);}, 1000);
+    //     });
+    // }
+
+
 
     var observer = new MutationObserver(function(){
         //console.log("DOM changed");
 
         // console.log(window.location.hostname);
         // console.log(document.URL.match(/https:\/\/presentur.ntu.edu.sg/));
+
+        if(document.URL.match(/https:\/\/lams.ntu.edu.sg\/lams\/tool\/lanb11\/learning\/learner.do/)){
+            console.log(window.location.hostname);
+            var videoNamePath = ".panel-body > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > strong:nth-child(1) > span:nth-child(1) > span:nth-child(1)"
+            var videoNameElem = document.querySelector(videoNamePath);
+            // new MutationObserver(function(){
+
+            // }).observe(videoNameElem, {subtree: true, childList: true});
+            // document.addEventListener("DOMContentLoaded", function(){
+            //     console.log(videoNameElem.style);
+            //     videoNameElem.style.backgroundcolor = "black";
+            // });
+            if( videoNameElem !== null){
+                console.log(videoNameElem.textContent);
+                console.log("videoName not null");
+                // if(document.querySelector("#div_index").style.width === "100%"){
+                //     document.querySelector("#div_index").style.width = "0px";
+                // }
+            }
+        }
 
         //for video player
         // if(window.location.hostname === "presentur.ntu.edu.sg"){
@@ -101,7 +133,8 @@
         videoSrcBtn2.style = buttonCSS;
         videoSrcBtn2.innerHTML = "btn2";
         videoSrcBtn2.addEventListener("click", function(){
-            GM_download(video1Src, "video")
+            // GM_download(video1Src, "video");
+            GM_download({url:video1Src, name:"video.mp4"});
             // window.open("https://ntume22.ntu.edu.sg", '_self');
             // var downloadLink = document.createElement("a");
             // downloadLink.setAttribute("href", video1Src);
