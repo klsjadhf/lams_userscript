@@ -8,7 +8,7 @@
 // @updateURL    https://github.com/klsjadhf/lams_userscript/raw/master/lams.user.js
 // @downloadURL  https://github.com/klsjadhf/lams_userscript/raw/master/lams.user.js
 // @match        http*://presentur.ntu.edu.sg/aculearn-idm/v8/studio/embed.asp*
-// @grant        none
+// @grant        GM_download
 // @run-at       document-start
 // ==/UserScript==
 
@@ -54,8 +54,10 @@
         buttonContainer.style = `
             position: absolute;
             z-index: 10;
-            bottom: 30px;
+            top: 0px;
             right: 0px;
+            opacity: .5;
+            background-color: black;        
         `;
         document.querySelector("body").appendChild(buttonContainer);
 
@@ -63,7 +65,6 @@
             background: none;
             color: white;
             border: 0;
-            opacity: 50%;
         `;
 
         //download video button
@@ -81,6 +82,34 @@
             window.open(video1Src, '_blank');
         });
         buttonContainer.appendChild(videoSrcBtn);
+
+        //2nd button
+        var videoSrcBtn2 = document.createElement("button");
+        videoSrcBtn2.id = "videoSrcBtn2";
+        videoSrcBtn2.style = buttonCSS;
+        videoSrcBtn2.innerHTML = "btn2";
+        videoSrcBtn2.addEventListener("click", function(){
+            GM_download(video1Src, "video")
+            // window.open("https://ntume22.ntu.edu.sg", '_self');
+            // var downloadLink = document.createElement("a");
+            // downloadLink.setAttribute("href", video1Src);
+            // downloadLink.setAttribute("download", "video.mp4");
+            // downloadLink.innerHTML = "download";
+            // document.body.appendChild(downloadLink);
+            // downloadLink.click();
+            // console.log(document);
+        });
+        buttonContainer.appendChild(videoSrcBtn2);
+
+        //dosent work. cannot download from different domain
+        var downloadLink = document.createElement("a");
+        downloadLink.style = buttonCSS;
+        downloadLink.setAttribute("href", video1Src);
+        downloadLink.setAttribute("download", "video.mp4");
+        downloadLink.innerHTML = "download";
+        buttonContainer.appendChild(downloadLink);
+        // downloadLink.click();
+        // console.log(document);
     }
 })();
 
