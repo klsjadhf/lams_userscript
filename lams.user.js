@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         lams
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.21
 // @description  change lams video speed and download video button
 // @author       klsjadhf
 // @homepage     https://github.com/klsjadhf/lams_userscript
@@ -15,7 +15,8 @@
 (function() {
     'use strict';
 
-    console.log("hello");
+    console.log("tampermonkey script running");
+    
     document.querySelector("#div_index").style.width = "0px";
     console.log(document);
 
