@@ -62,11 +62,7 @@
         var video1Src = "";
         var videoName = GM_getValue("videoName", "video.mp4")
 
-        console.log(videoName.indexOf(":"));
-        // var newStr = videoName.slice(0, videoName.indexOf(":"));
-        // newStr += videoName.slice(videoName.indexOf(":")+1, videoName.length);
-        // videoName = newStr
-        // console.log(parseInt(videoName.slice(0, videoName.indexOf(":"))));
+        // console.log(videoName.indexOf(":"));
 
         while(videoName.indexOf(":") !== -1){ //remove colons
             var newStr = videoName.slice(0, videoName.indexOf(":"));
@@ -74,17 +70,13 @@
             videoName = newStr
         }
         videoName += ".mp4";
-        // videoName = videoName.slice(0, 50);
         
-        console.log("video1 can play");
-
-        console.log(videoName);
-        console.log(unsafeWindow.hideIndeximg);
+        console.log("video1 canplay");
+        // console.log(videoName);
+        // console.log(unsafeWindow.hideIndeximg);
         
-        // if(document.querySelector("#Video1_html5_api").src.length !== 0){
-            video1Src = document.querySelector("#Video1_html5_api").src;
-            console.log("video1 src: " + video1Src);
-        // }
+        video1Src = document.querySelector("#Video1_html5_api").src;
+        console.log("video1 src: " + video1Src);
 
         //add container for buttons
         var buttonContainer = document.createElement("div");
@@ -105,50 +97,25 @@
             border: 0;
         `;
 
+        // //open video source button
+        // var videoSrcBtn = document.createElement("button");
+        // videoSrcBtn.id = "videoSrcBtn";
+        // videoSrcBtn.style = buttonCSS;
+        // videoSrcBtn.innerHTML = "src";
+        // videoSrcBtn.addEventListener("click", function(){
+        //     window.open(video1Src, '_blank');
+        // });
+        // buttonContainer.appendChild(videoSrcBtn);
+
         //download video button
-        var videoSrcBtn = document.createElement("button");
-        videoSrcBtn.id = "videoSrcBtn";
-        videoSrcBtn.style = buttonCSS;
-        // videoSrcBtn.style = `
-        //     position: absolute;
-        //     z-index: 10;
-        // `;
-        // videoSrcBtn.style.position = "relative";
-        // videoSrcBtn.style.zIndex = "10";
-        videoSrcBtn.innerHTML = "open";
-        videoSrcBtn.addEventListener("click", function(){
-            window.open(video1Src, '_blank');
-        });
-        buttonContainer.appendChild(videoSrcBtn);
-
-        //2nd button
-        var videoSrcBtn2 = document.createElement("button");
-        videoSrcBtn2.id = "videoSrcBtn2";
-        videoSrcBtn2.style = buttonCSS;
-        videoSrcBtn2.innerHTML = "btn2";
-        videoSrcBtn2.addEventListener("click", function(){
-            // GM_download(video1Src, "video");
+        var downloadBtn = document.createElement("button");
+        downloadBtn.id = "downloadBtn";
+        downloadBtn.style = buttonCSS;
+        downloadBtn.innerHTML = "download";
+        downloadBtn.addEventListener("click", function(){
             GM_download({url:video1Src, name:videoName});
-            // window.open("https://ntume22.ntu.edu.sg", '_self');
-            // var downloadLink = document.createElement("a");
-            // downloadLink.setAttribute("href", video1Src);
-            // downloadLink.setAttribute("download", "video.mp4");
-            // downloadLink.innerHTML = "download";
-            // document.body.appendChild(downloadLink);
-            // downloadLink.click();
-            // console.log(document);
         });
-        buttonContainer.appendChild(videoSrcBtn2);
-
-        //dosent work. cannot download from different domain
-        var downloadLink = document.createElement("a");
-        downloadLink.style = buttonCSS;
-        downloadLink.setAttribute("href", video1Src);
-        downloadLink.setAttribute("download", "video.mp4");
-        downloadLink.innerHTML = "download";
-        buttonContainer.appendChild(downloadLink);
-        // downloadLink.click();
-        // console.log(document);
+        buttonContainer.appendChild(downloadBtn);
     }
 })();
 
