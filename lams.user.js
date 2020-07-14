@@ -8,7 +8,14 @@
 // @updateURL    https://github.com/klsjadhf/lams_userscript/raw/master/lams.user.js
 // @downloadURL  https://github.com/klsjadhf/lams_userscript/raw/master/lams.user.js
 // @match        http*://presentur.ntu.edu.sg/aculearn-idm/v8/studio/embed.asp*
+// @match        http*://lams.ntu.edu.sg/lams/tool/lanb11/learning/learner.do*
 // @grant        GM_download
+// @grant        GM_listValues
+// @grant        GM_deleteValue
+// @grant        GM_addValueChangeListener
+// @grant        GM_removeValueChangeListener
+// @grant        GM_setValue
+// @grant        GM_getValue
 // @run-at       document-start
 // ==/UserScript==
 
@@ -19,21 +26,26 @@
 
 
     var observer = new MutationObserver(function(){
-        console.log("DOM changed");
-        
-        var linkDisplayed = 0;
+        //console.log("DOM changed");
 
-        //remove annoying box
-        if(document.querySelector("#div_index") !== null){
-            // console.log(document.querySelector("#div_index").style.width);
-            if(document.querySelector("#div_index").style.width === "100%"){
-                document.querySelector("#div_index").style.width = "0px";
+        // console.log(window.location.hostname);
+        // console.log(document.URL.match(/https:\/\/presentur.ntu.edu.sg/));
+
+        //for video player
+        // if(window.location.hostname === "presentur.ntu.edu.sg"){
+        if(document.URL.match(/https:\/\/presentur.ntu.edu.sg\/aculearn-idm\/v8\/studio\/embed.asp/)){
+            //remove annoying box
+            if(document.querySelector("#div_index") !== null){
+                // console.log(document.querySelector("#div_index").style.width);
+                if(document.querySelector("#div_index").style.width === "100%"){
+                    document.querySelector("#div_index").style.width = "0px";
+                }
             }
-        }
 
-        //video
-        if(document.querySelector("#Video1_html5_api") !== null){
-            document.querySelector("#Video1_html5_api").addEventListener("canplay",video1Onload);
+            //video
+            if(document.querySelector("#Video1_html5_api") !== null){
+                document.querySelector("#Video1_html5_api").addEventListener("canplay",video1Onload);
+            }
         }
     });
     observer.observe(document, {childList: true, subtree: true});
