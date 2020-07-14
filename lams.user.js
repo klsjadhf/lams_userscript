@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         lams
 // @namespace    http://tampermonkey.net/
-// @version      0.22
+// @version      0.23
 // @description  change lams video speed and download video button
 // @author       klsjadhf
 // @homepage     https://github.com/klsjadhf/lams_userscript
@@ -9,7 +9,7 @@
 // @downloadURL  https://github.com/klsjadhf/lams_userscript/raw/master/lams.user.js
 // @match        http*://presentur.ntu.edu.sg/aculearn-idm/v8/studio/embed.asp*
 // @grant        none
-// @run-at document-idle
+// @run-at       document-start
 // ==/UserScript==
 
 (function() {
@@ -17,14 +17,36 @@
 
     console.log("tampermonkey script running");
 
-    document.querySelector("#div_index").style.width = "0px";
-    console.log(document);
 
-    document.addEventListener("loadeddata", function(){
-        document.querySelector("#div_index").style.width = "0px";
-        alert("change width");
-        //document.querySelector("#div_index").style = "";
+    var observer = new MutationObserver(function(){
+        console.log("DOM changed");
+
+        if(document.querySelector("#div_index") !== null){
+            console.log(document.querySelector("#div_index").style.width);
+            if(document.querySelector("#div_index").style.width === "100%"){
+                document.querySelector("#div_index").style.width = "0px";
+            }
+        }
     });
+    observer.observe(document, {childList: true, subtree: true});
+    // var checkElementTimer = window.setInterval(function(){
+    //     if(document.querySelector("#div_index").visibility == "hidden"){
+    //         alert("div index loaded");
+    //         window.clearInterval(checkElementTimer);
+    //     }
+    //     else{
+    //         console.log("div index not found "+document.querySelector("#div_index").style)
+    //     }
+    // }, 500);
+
+    // document.querySelector("#div_index").style.width = "0px";
+    // console.log(document.querySelector("#div_index"));
+
+    // document.addEventListener("loadeddata", function(){
+    //     document.querySelector("#div_index").style.width = "0px";
+    //     alert("change width");
+    //     //document.querySelector("#div_index").style = "";
+    // });
 })();
 /*
 localStorage.getItem('arvplayer-playbackRate');
