@@ -44,7 +44,7 @@
     }
 
     var observer = new MutationObserver(function(){
-        //console.log("DOM changed");
+        // console.log("DOM changed");
 
         //get video name from main site
         if(document.URL.match(/https:\/\/lams\.ntu\.edu\.sg\/lams\/tool\/lanb11\/learning\/learner\.do/)){
@@ -65,9 +65,10 @@
             //remove annoying box
             if(document.querySelector("#div_index") !== null){
                 // console.log(document.querySelector("#div_index").style.width);
-                if(document.querySelector("#div_index").style.width === "100%"){
-                    document.querySelector("#div_index").style.width = "0px";
-                }
+                document.querySelector("#div_index").style.width = "0px";
+                document.querySelector("#div_index").style.height = "0px";
+                document.querySelector("#div_index").style.visibility = "hidden";
+                document.querySelector("#div_index").style.opacity = "0";
             }
 
             //video
@@ -80,7 +81,8 @@
 
     function video1Onload(){
         var video1Src = "";
-        var videoName = GM_getValue("videoName", "video.mp4")
+        var videoName = GM_getValue("videoName", "video.mp4");
+        var videoElem = document.querySelector("#Video1_html5_api");
 
         // console.log(videoName.indexOf(":"));
 
@@ -94,7 +96,7 @@
         console.log("video1 canplay");
         // console.log(videoName);
         
-        video1Src = document.querySelector("#Video1_html5_api").src;
+        video1Src = videoElem.src;
         console.log("video1 src: " + video1Src);
 
         //add container for buttons
@@ -114,6 +116,7 @@
             background: none;
             color: white;
             border: 0;
+            margin: 0px;
         `;
 
         // //open video source button
@@ -136,6 +139,18 @@
         });
         buttonContainer.appendChild(downloadBtn);
 
+        //show video speed
+        var videoSpdDis = document.createElement("p");
+        videoSpdDis.id = "videoSpdDis";
+        videoSpdDis.style = buttonCSS;
+        videoSpdDis.style.textAlign = "right";
+        videoSpdDis.style.marginRight = "6px";
+        videoSpdDis.innerHTML = videoElem.playbackRate;
+        buttonContainer.appendChild(videoSpdDis);
+        videoElem.addEventListener("ratechange", ()=>{ //update playback rate 
+            videoSpdDis.innerHTML = videoElem.playbackRate; 
+        });
+
         //detect key press
         document.addEventListener("keydown", (keydownEvent)=>{
             onKeypress(getPressedkey(keydownEvent));
@@ -143,35 +158,40 @@
     }
 
     function onKeypress(keyInfo){
+        var videoElem = document.querySelector("#Video1_html5_api");
+
         console.log("pressed " + keyInfo.pressedKey);
 
         //play/pause
         if(keyInfo.pressedKey === "p" || keyInfo.pressedKey === "P"){
             document.querySelector(".vjs-play-control").click();
-            // window.eval('document.querySelector(".vjs-play-control").click();');
-            // unsafeWindow.document.querySelector(".vjs-play-control").click();
-            // console.log(unsafeWindow.document.querySelector(".vjs-play-control"));
-            // console.log(unsafeWindow.player.pause);
             console.log("play/pause video");
         }
         //slow down
         else if(keyInfo.pressedKey === ","){
+            arvplayer.playbackRate(fracPlusSub("-", arvplayer.playbackRate(), 0.5));
             console.log("slow coarse");
         }
         //slow down fine
         else if(keyInfo.pressedKey === "<"){
+            arvplayer.playbackRate(fracPlusSub("-", arvplayer.playbackRate(), 0.1));
             console.log("slow fine");
         }
         //speed up
         else if(keyInfo.pressedKey === "."){
+            arvplayer.playbackRate(fracPlusSub("+", arvplayer.playbackRate(), 0.5));
             console.log("fast coarse");
         }
         //speed up fine
         else if(keyInfo.pressedKey === ">"){
+            arvplayer.playbackRate(fracPlusSub("+", arvplayer.playbackRate(), 0.1));
             console.log("fast fine");
         }
         //set saved playback speed
         else if(keyInfo.pressedKey === "s" || keyInfo.pressedKey === "S"){
+            // console.log(videojs.getPlayers());
+            arvplayer.playbackRate(2);
+            // videoElem.playbackRate = 2;
             console.log("custom speed");
         }
         //rewind
@@ -193,26 +213,13 @@
         //mute/unmute
         else if(keyInfo.pressedKey === "m" || keyInfo.pressedKey === "M"){
             document.querySelector(".vjs-mute-control").click();
-            // window.eval('document.querySelector(".vjs-mute-control").click();');
-            // unsafeWindow.document.querySelector(".vjs-mute-control").click();
             console.log("mute");
         }
         //toggle fullscreen
         else if(keyInfo.pressedKey === "f" || keyInfo.pressedKey === "F"){
-            // console.log(window.document.URL);
-            // console.log(window.eval('document.fullscreenElement'));
-            console.log(IsFullScreen());
+            // console.log(IsFullScreen());
             if(IsFullScreen()) arvplayer.exitFullscreen();
             else document.querySelector(".arv_fullscreenButton").click();
-            // window.eval('document.exitFullscreen();');
-            // unsafeWindow.arvfullscreen();
-            // if(window.eval('document.fullscreenElement') !== null) window.eval('arvexitFullscreen();');
-            // else window.eval('document.querySelector(".arv_fullscreenButton").click();');
-            // if(window.eval('document.fullscreenElement') !== null) GM_setValue("fullscreen", true);
-            // else GM_setValue("fullscreen", false);
-
-            // console.log(GM_getValue("fullscreen"));
-
             console.log("fullscreen");
         }
     }
@@ -232,6 +239,17 @@
         console.log("modifier: "+keyInfo.modifier);
 
         return keyInfo;
+    }
+
+    //more accurate addition and subtraction of floating point 
+    function fracPlusSub(sign, val1, val2){
+        if(sign === "+"){
+            return (val1*10 + val2*10)/10;
+        }
+        else if(sign === "-"){
+            return (val1*10 - val2*10)/10;
+        }
+        else return 0.0;
     }
 })();
 
