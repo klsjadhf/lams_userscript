@@ -22,9 +22,7 @@
 (function() {
     'use strict'
 
-    GM_setValue("fullscreen", true);
     console.log(GM_listValues().map(GM_getValue));
-
     console.log("tampermonkey script running on " + window.location.hostname);
 
     if(document.URL.match(/https:\/\/lams\.ntu\.edu\.sg\/lams\/tool\/lanb11\/learning\/learner\.do/)){
@@ -33,16 +31,6 @@
             GM_setValue("pressedKey", getPressedkey(keydownEvent));
             // console.log(GM_getValue("pressedKey").pressedKey);
         });
-        // GM_addValueChangeListener("fullscreen", function(name, old_value, new_value, remote) {
-        //     // if(remote){
-        //         if(new_value === true) {
-        //             console.log("exit fullscreen");
-        //             // window.eval('arvexitFullscreen();');
-        //             unsafeWindow.arvexitFullscreen();
-        //             // GM_setValue("fullscreen", false);
-        //         }
-        //     // }
-        // });
     }
     else if(document.URL.match(/https:\/\/presentur\.ntu\.edu\.sg\/aculearn-idm\/v8\/studio\/embed\.asp/)){
         //get keypress from lams window
@@ -53,16 +41,6 @@
                 GM_setValue("pressedKey", ""); //clear pressed key
             }
         });
-        // GM_addValueChangeListener("fullscreen", function(name, old_value, new_value, remote) {
-        //     // if(remote){
-        //         if(new_value === false) {
-        //             console.log("enter fullscreen");
-        //             unsafeWindow.document.querySelector(".arv_fullscreenButton").click();
-        //             // window.eval('document.querySelector(".arv_fullscreenButton").click();');
-        //             // GM_setValue("fullscreen", true);
-        //         }
-        //     // }
-        // });
     }
 
     var observer = new MutationObserver(function(){
@@ -77,8 +55,9 @@
                 GM_setValue("videoName", videoNameElem.textContent);
                 // console.log(videoNameElem.textContent);
             }
-            
-            window.setInterval( ()=>document.querySelector("iframe").focus(), 500); //set focus back to video every 500ms
+
+            //set focus back to video every 500ms(workaround for fullscreen)
+            window.setInterval( ()=>document.querySelector("iframe").focus(), 500);
         }
 
         //for video player in iframe
@@ -114,7 +93,6 @@
         
         console.log("video1 canplay");
         // console.log(videoName);
-        // console.log(unsafeWindow.hideIndeximg);
         
         video1Src = document.querySelector("#Video1_html5_api").src;
         console.log("video1 src: " + video1Src);
@@ -169,7 +147,8 @@
 
         //play/pause
         if(keyInfo.pressedKey === "p" || keyInfo.pressedKey === "P"){
-            window.eval('document.querySelector(".vjs-play-control").click();');
+            document.querySelector(".vjs-play-control").click();
+            // window.eval('document.querySelector(".vjs-play-control").click();');
             // unsafeWindow.document.querySelector(".vjs-play-control").click();
             // console.log(unsafeWindow.document.querySelector(".vjs-play-control"));
             // console.log(unsafeWindow.player.pause);
@@ -213,7 +192,8 @@
         }
         //mute/unmute
         else if(keyInfo.pressedKey === "m" || keyInfo.pressedKey === "M"){
-            window.eval('document.querySelector(".vjs-mute-control").click();');
+            document.querySelector(".vjs-mute-control").click();
+            // window.eval('document.querySelector(".vjs-mute-control").click();');
             // unsafeWindow.document.querySelector(".vjs-mute-control").click();
             console.log("mute");
         }
@@ -221,9 +201,9 @@
         else if(keyInfo.pressedKey === "f" || keyInfo.pressedKey === "F"){
             // console.log(window.document.URL);
             // console.log(window.eval('document.fullscreenElement'));
-            console.log(unsafeWindow.IsFullScreen());
-            if(unsafeWindow.IsFullScreen()) arvplayer.exitFullscreen();
-            else unsafeWindow.document.querySelector(".arv_fullscreenButton").click();
+            console.log(IsFullScreen());
+            if(IsFullScreen()) arvplayer.exitFullscreen();
+            else document.querySelector(".arv_fullscreenButton").click();
             // window.eval('document.exitFullscreen();');
             // unsafeWindow.arvfullscreen();
             // if(window.eval('document.fullscreenElement') !== null) window.eval('arvexitFullscreen();');
