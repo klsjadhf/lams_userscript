@@ -26,6 +26,24 @@
 
     console.log("tampermonkey script running on " + window.location.hostname);
 
+    if(document.URL.match(/https:\/\/lams\.ntu\.edu\.sg\/lams\/tool\/lanb11\/learning\/learner\.do/)){
+        //if user pressed key in wrong window, send to iframe
+        document.addEventListener("keydown", (keydownEvent) =>{
+            GM_setValue("pressedKey", getPressedkey(keydownEvent));
+            // console.log(GM_getValue("pressedKey").pressedKey);
+        });
+    }
+    else if(document.URL.match(/https:\/\/presentur\.ntu\.edu\.sg\/aculearn-idm\/v8\/studio\/embed\.asp/)){
+        //get keypress from lams window
+        GM_addValueChangeListener("pressedKey", function(name, old_value, new_value, remote) {
+            if(remote){
+                // console.log("changed to " + new_value.pressedKey);
+                onKeypress(new_value);
+                GM_setValue("pressedKey", ""); //clear pressed key
+            }
+        });
+    }
+
     var observer = new MutationObserver(function(){
         //console.log("DOM changed");
 
@@ -116,6 +134,36 @@
             GM_download({url:video1Src, name:videoName});
         });
         buttonContainer.appendChild(downloadBtn);
+
+        //detect key press
+        document.addEventListener("keydown", (keydownEvent)=>{
+            onKeypress(getPressedkey(keydownEvent));
+        });
+    }
+
+    function onKeypress(keyInfo){
+        console.log("pressed " + keyInfo.pressedKey);
+        if(keyInfo.pressedKey === "p" || keyInfo.pressedKey === "P"){
+            unsafeWindow.document.querySelector(".vjs-play-control").click();
+            // console.log(unsafeWindow.document.querySelector(".vjs-play-control"));
+            // console.log(unsafeWindow.player.pause);
+            console.log("play/pause video");
+        }
+    }
+
+    function getPressedkey(keydownEvent){
+        var keyInfo = {
+            pressedKey: keydownEvent.key,
+            modifier: ""
+        }
+
+        if(keydownEvent.altKey) keyInfo.modifier="Alt";
+        else if(keydownEvent.ctrlKey) keyInfo.modifier="Control";
+        else if(keydownEvent.metaKey) keyInfo.modifier="OS";
+        else if(keydownEvent.shiftKey) keyInfo.modifier="Shift";
+        else keyInfo.modifier="";
+
+        return keyInfo;
     }
 })();
 
@@ -126,6 +174,7 @@ var arv_rate_list
 set_arvRate(player);
 function set_arvRate(player)
 hideIndeximg()
+player.pause();
 
 btn zindex 10
 position relative
