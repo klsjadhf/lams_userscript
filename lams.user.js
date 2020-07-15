@@ -22,7 +22,8 @@
 (function() {
     'use strict'
 
-    GM_listValues();
+    GM_setValue("fullscreen", true);
+    console.log(GM_listValues().map(GM_getValue));
 
     console.log("tampermonkey script running on " + window.location.hostname);
 
@@ -32,6 +33,16 @@
             GM_setValue("pressedKey", getPressedkey(keydownEvent));
             // console.log(GM_getValue("pressedKey").pressedKey);
         });
+        // GM_addValueChangeListener("fullscreen", function(name, old_value, new_value, remote) {
+        //     // if(remote){
+        //         if(new_value === true) {
+        //             console.log("exit fullscreen");
+        //             // window.eval('arvexitFullscreen();');
+        //             unsafeWindow.arvexitFullscreen();
+        //             // GM_setValue("fullscreen", false);
+        //         }
+        //     // }
+        // });
     }
     else if(document.URL.match(/https:\/\/presentur\.ntu\.edu\.sg\/aculearn-idm\/v8\/studio\/embed\.asp/)){
         //get keypress from lams window
@@ -42,6 +53,16 @@
                 GM_setValue("pressedKey", ""); //clear pressed key
             }
         });
+        // GM_addValueChangeListener("fullscreen", function(name, old_value, new_value, remote) {
+        //     // if(remote){
+        //         if(new_value === false) {
+        //             console.log("enter fullscreen");
+        //             unsafeWindow.document.querySelector(".arv_fullscreenButton").click();
+        //             // window.eval('document.querySelector(".arv_fullscreenButton").click();');
+        //             // GM_setValue("fullscreen", true);
+        //         }
+        //     // }
+        // });
     }
 
     var observer = new MutationObserver(function(){
@@ -54,8 +75,10 @@
             var videoNameElem = document.querySelector(videoNamePath);
             if( videoNameElem !== null){
                 GM_setValue("videoName", videoNameElem.textContent);
-                console.log(videoNameElem.textContent);
+                // console.log(videoNameElem.textContent);
             }
+            
+            window.setInterval( ()=>document.querySelector("iframe").focus(), 500); //set focus back to video every 500ms
         }
 
         //for video player in iframe
@@ -143,11 +166,74 @@
 
     function onKeypress(keyInfo){
         console.log("pressed " + keyInfo.pressedKey);
+
+        //play/pause
         if(keyInfo.pressedKey === "p" || keyInfo.pressedKey === "P"){
-            unsafeWindow.document.querySelector(".vjs-play-control").click();
+            window.eval('document.querySelector(".vjs-play-control").click();');
+            // unsafeWindow.document.querySelector(".vjs-play-control").click();
             // console.log(unsafeWindow.document.querySelector(".vjs-play-control"));
             // console.log(unsafeWindow.player.pause);
             console.log("play/pause video");
+        }
+        //slow down
+        else if(keyInfo.pressedKey === ","){
+            console.log("slow coarse");
+        }
+        //slow down fine
+        else if(keyInfo.pressedKey === "<"){
+            console.log("slow fine");
+        }
+        //speed up
+        else if(keyInfo.pressedKey === "."){
+            console.log("fast coarse");
+        }
+        //speed up fine
+        else if(keyInfo.pressedKey === ">"){
+            console.log("fast fine");
+        }
+        //set saved playback speed
+        else if(keyInfo.pressedKey === "s" || keyInfo.pressedKey === "S"){
+            console.log("custom speed");
+        }
+        //rewind
+        else if(keyInfo.pressedKey === "ArrowLeft"){
+            console.log("rewind");
+        }
+        //foward
+        else if(keyInfo.pressedKey === "ArrowRight"){
+            console.log("foward");
+        }
+        //volume up
+        else if(keyInfo.pressedKey === "ArrowUp"){
+            console.log("volume up");
+        }
+        //volume down
+        else if(keyInfo.pressedKey === "ArrowDown"){
+            console.log("volume down");
+        }
+        //mute/unmute
+        else if(keyInfo.pressedKey === "m" || keyInfo.pressedKey === "M"){
+            window.eval('document.querySelector(".vjs-mute-control").click();');
+            // unsafeWindow.document.querySelector(".vjs-mute-control").click();
+            console.log("mute");
+        }
+        //toggle fullscreen
+        else if(keyInfo.pressedKey === "f" || keyInfo.pressedKey === "F"){
+            // console.log(window.document.URL);
+            // console.log(window.eval('document.fullscreenElement'));
+            console.log(unsafeWindow.IsFullScreen());
+            if(unsafeWindow.IsFullScreen()) arvplayer.exitFullscreen();
+            else unsafeWindow.document.querySelector(".arv_fullscreenButton").click();
+            // window.eval('document.exitFullscreen();');
+            // unsafeWindow.arvfullscreen();
+            // if(window.eval('document.fullscreenElement') !== null) window.eval('arvexitFullscreen();');
+            // else window.eval('document.querySelector(".arv_fullscreenButton").click();');
+            // if(window.eval('document.fullscreenElement') !== null) GM_setValue("fullscreen", true);
+            // else GM_setValue("fullscreen", false);
+
+            // console.log(GM_getValue("fullscreen"));
+
+            console.log("fullscreen");
         }
     }
 
@@ -162,6 +248,8 @@
         else if(keydownEvent.metaKey) keyInfo.modifier="OS";
         else if(keydownEvent.shiftKey) keyInfo.modifier="Shift";
         else keyInfo.modifier="";
+
+        console.log("modifier: "+keyInfo.modifier);
 
         return keyInfo;
     }
