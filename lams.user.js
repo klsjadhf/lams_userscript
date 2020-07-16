@@ -100,11 +100,6 @@
 
         videoName = videoName.replace(/[*/:<>?\\|]/g, s =>
             String.fromCharCode(s.charCodeAt(0) + 0xFF00 - 0x20));
-        // while(videoName.indexOf(":") !== -1){ //remove colons
-        //     var newStr = videoName.slice(0, videoName.indexOf(":"));
-        //     newStr += videoName.slice(videoName.indexOf(":")+1, videoName.length);
-        //     videoName = newStr
-        // }
         videoName += ".mp4";
         
         console.log("video1 canplay");
@@ -246,11 +241,6 @@
         }
         //rewind
         else if(keyInfo.pressedKey === "ArrowLeft"){
-            // console.log("rewind prev " + videoElem.currentTime);
-            // newTime = fracPlusSub("-", videoElem.currentTime, 10)
-            // if(newTime <= 0) videoElem.currentTime = 0;
-            // else videoElem.currentTime = newTime;
-            // console.log("rewind " + videoElem.currentTime);
             newTime = fracPlusSub("-", arvplayer.currentTime(), 3)
             if(newTime <= 0) arvplayer.currentTime(0);
             else arvplayer.currentTime(newTime);
@@ -258,11 +248,6 @@
         }
         //foward
         else if(keyInfo.pressedKey === "ArrowRight"){
-            // console.log("foward prev " + videoElem.currentTime);
-            // newTime = fracPlusSub("+", videoElem.currentTime, 10)
-            // if(newTime >= videoElem.duration) videoElem.currentTime = videoElem.duration;
-            // else videoElem.currentTime = newTime;
-            // console.log("foward " + videoElem.currentTime);
             newTime = fracPlusSub("+", arvplayer.currentTime(), 3)
             if(newTime >= arvplayer.duration()) arvplayer.currentTime(arvplayer.duration());
             else arvplayer.currentTime(newTime);
