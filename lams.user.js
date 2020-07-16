@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         lams
 // @namespace    https://github.com/klsjadhf/lams_userscript
-// @version      1.12
+// @version      1.13
 // @description  change lams video speed and download video button
 // @author       klsjadhf
 // @homepage     https://github.com/klsjadhf/lams_userscript
@@ -112,6 +112,7 @@
         var buttonContainer = document.createElement("div");
         buttonContainer.id = "buttonContainer";
         buttonContainer.style = `
+            box-sizing: border-box;
             position: absolute;
             z-index: 10;
             top: 0px;
@@ -119,6 +120,8 @@
             opacity: .3;
             background-color: black;   
             visibility: visible;
+            display: grid;
+            grid-gap = 2px;
         `;
         document.querySelector("body").appendChild(buttonContainer);
 
@@ -127,6 +130,9 @@
             color: white;
             border: 0;
             margin: 0px;
+            padding: 0px;
+            text-align: center;
+            grid-row-start: 1;
         `;
 
         // //open video source button
@@ -149,17 +155,55 @@
         });
         buttonContainer.appendChild(downloadBtn);
 
+        //container for video speed controls
+        var speedContainer = document.createElement("div");
+        speedContainer.id = "speedContainer";
+        speedContainer.style = `
+            display: grid;
+            grid-gap: 2px;
+        `;
+        buttonContainer.appendChild(speedContainer);
+
         //show video speed
-        var videoSpdDis = document.createElement("p");
+        var videoSpdDis = document.createElement("span");
         videoSpdDis.id = "videoSpdDis";
         videoSpdDis.style = buttonCSS;
-        videoSpdDis.style.textAlign = "right";
-        videoSpdDis.style.marginRight = "6px";
-        videoSpdDis.innerHTML = "Speed: " + videoElem.playbackRate.toFixed(1);
-        buttonContainer.appendChild(videoSpdDis);
+        videoSpdDis.style.fontSize = "1.1em";
+        // videoSpdDis.style.textAlign = "right";
+        // videoSpdDis.style.marginRight = "6px";
+        videoSpdDis.innerHTML = videoElem.playbackRate.toFixed(1);
+        speedContainer.appendChild(videoSpdDis);
         videoElem.addEventListener("ratechange", ()=>{ //update playback rate 
-            videoSpdDis.innerHTML = "Speed: " + videoElem.playbackRate.toFixed(1); 
+            videoSpdDis.innerHTML = videoElem.playbackRate.toFixed(1); 
         });
+
+        //slow down button
+        var slowBtn = document.createElement("button");
+        slowBtn.id = "slowBtn";
+        slowBtn.style = buttonCSS;
+        slowBtn.innerHTML = "&#x2796;";
+        slowBtn.addEventListener("click", function(){
+            onKeypress({
+                pressedKey: ",",
+                repeat: false,
+                modifier: ""});
+            // console.log("slow");
+        });
+        speedContainer.insertBefore(slowBtn, videoSpdDis);
+
+        //speed up button
+        var fastBtn = document.createElement("button");
+        fastBtn.id = "fastBtn";
+        fastBtn.style = buttonCSS;
+        fastBtn.innerHTML = "&#x2795;";
+        fastBtn.addEventListener("click", function(){
+            onKeypress({
+                pressedKey: ".",
+                repeat: false,
+                modifier: ""});
+            // console.log("fast");
+        });
+        speedContainer.appendChild(fastBtn);
 
         //detect key press
         document.addEventListener("keydown", (keydownEvent)=>{
