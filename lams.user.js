@@ -22,7 +22,7 @@
 (function() {
     'use strict'
 
-    console.log(GM_listValues().map(GM_getValue));
+    // console.log(GM_listValues().map(GM_getValue));
     console.log("tampermonkey script running on " + window.location.hostname);
 
     var videoOnLoadAdded = false;
@@ -168,7 +168,7 @@
         var videoElem = document.querySelector("#Video1_html5_api");
         var newTime;
 
-        console.log("pressed " + keyInfo.pressedKey);
+        // console.log("pressed " + keyInfo.pressedKey);
 
         if(!keyInfo.repeat){ //keys that should not press and hold
             //play/pause
@@ -268,7 +268,7 @@
         else if(keydownEvent.shiftKey) keyInfo.modifier="Shift";
         else keyInfo.modifier="";
 
-        console.log("modifier: "+keyInfo.modifier);
+        // console.log("modifier: "+keyInfo.modifier);
 
         return keyInfo;
     }
