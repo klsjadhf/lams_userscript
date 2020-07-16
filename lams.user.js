@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         lams
 // @namespace    https://github.com/klsjadhf/lams_userscript
-// @version      1.01
+// @version      1.10
 // @description  change lams video speed and download video button
 // @author       klsjadhf
 // @homepage     https://github.com/klsjadhf/lams_userscript
@@ -113,7 +113,8 @@
             top: 0px;
             right: 0px;
             opacity: .5;
-            background-color: black;        
+            background-color: black;   
+            visibility: visible;
         `;
         document.querySelector("body").appendChild(buttonContainer);
 
@@ -211,6 +212,16 @@
                 if(IsFullScreen()) arvplayer.exitFullscreen();
                 else document.querySelector(".arv_fullscreenButton").click();
                 console.log("fullscreen");
+            }
+            //toggle hide extra stuff
+            else if(keyInfo.pressedKey === "h" || keyInfo.pressedKey === "H"){
+                if(document.querySelector("#buttonContainer").style.visibility === "visible"){
+                    document.querySelector("#buttonContainer").style.visibility = "hidden";
+                }
+                else{
+                    document.querySelector("#buttonContainer").style.visibility = "visible";
+                }
+                console.log("hide buttons " + document.querySelector("#buttonContainer").style.visibility);
             }
         }
         //allowed press and hold
