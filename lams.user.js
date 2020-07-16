@@ -161,6 +161,12 @@
             onKeypress(getPressedkey(keydownEvent));
         });
 
+        document.querySelector(".arv_fullscreenButton").addEventListener("click", ()=>{
+            console.log("exit fullscreen");
+            if(IsFullScreen()) arvplayer.exitFullscreen();
+            // arvplayer.exitFullscreen();
+        });
+
         document.querySelector("#Video1_html5_api").removeEventListener("canplay", video1Onload);
     }
 
