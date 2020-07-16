@@ -29,5 +29,5 @@ Down arrow | Decrease volume
 - [ ] Add pictures/video for installation guide
 
 # Known bugs
-- [ ] Cannot exit fullscreen using fullscreen button due to cross origin error
+- [x] Cannot exit fullscreen using fullscreen button due to cross origin error
 - [ ] Scrolling if changing volume while not in fulllscreen
