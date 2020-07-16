@@ -33,3 +33,4 @@ Down arrow | Decrease volume
 # Known bugs
 - [x] Cannot exit fullscreen using fullscreen button due to cross origin error
 - [ ] Scrolling if changing volume while not in fulllscreen
+- [ ] Some subjects cannot get correct video name
