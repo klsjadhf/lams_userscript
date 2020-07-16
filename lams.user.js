@@ -51,15 +51,22 @@
         //get video name from main site
         if(document.URL.match(/https:\/\/lams\.ntu\.edu\.sg\/lams\/tool\/lanb11\/learning\/learner\.do/)){
             // console.log(document.URL.match(/https:\/\/lams.ntu.edu.sg\/lams\/tool\/lanb11\/learning\/learner.do*/));
-            var videoNamePath = ".panel-body > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > strong:nth-child(1) > span:nth-child(1) > span:nth-child(1)"
+            var videoNamePath = ".panel-body > .panel"
             var videoNameElem = document.querySelector(videoNamePath);
-            if( videoNameElem !== null){
-                GM_setValue("videoName", videoNameElem.textContent);
-                // console.log(videoNameElem.textContent);
+            if( document.querySelector(".panel-body") !== null){
+                var name = videoNameElem.innerText.trim()
+                // console.log(name.indexOf("\n"));
+                if(name.indexOf("\n") !== -1){ //get only first sentence
+                    name = name.slice(0, name.indexOf("\n"));
+                }
+                // console.log(name);
+                GM_setValue("videoName", name);
             }
 
             //set focus back to video every 500ms(workaround for fullscreen)
-            window.setInterval( ()=>document.querySelector("iframe").focus(), 500);
+            if(document.querySelector("iframe") && !videoOnLoadAdded){
+                window.setInterval( ()=>document.querySelector("iframe").focus(), 500);
+            }
         }
 
         //for video player in iframe
@@ -99,7 +106,7 @@
         videoName += ".mp4";
         
         console.log("video1 canplay");
-        // console.log(videoName);
+        console.log(videoName);
         
         video1Src = videoElem.src;
         console.log("video1 src: " + video1Src);
