@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         lams
 // @namespace    https://github.com/klsjadhf/lams_userscript
-// @version      0.23
+// @version      1.0
 // @description  change lams video speed and download video button
 // @author       klsjadhf
 // @homepage     https://github.com/klsjadhf/lams_userscript
@@ -138,7 +138,7 @@
         var downloadBtn = document.createElement("button");
         downloadBtn.id = "downloadBtn";
         downloadBtn.style = buttonCSS;
-        downloadBtn.innerHTML = "download";
+        downloadBtn.innerHTML = "Download";
         downloadBtn.addEventListener("click", function(){
             GM_download({url:video1Src, name:videoName});
         });
@@ -150,10 +150,10 @@
         videoSpdDis.style = buttonCSS;
         videoSpdDis.style.textAlign = "right";
         videoSpdDis.style.marginRight = "6px";
-        videoSpdDis.innerHTML = videoElem.playbackRate;
+        videoSpdDis.innerHTML = "Speed: " + videoElem.playbackRate.toFixed(1);
         buttonContainer.appendChild(videoSpdDis);
         videoElem.addEventListener("ratechange", ()=>{ //update playback rate 
-            videoSpdDis.innerHTML = videoElem.playbackRate; 
+            videoSpdDis.innerHTML = "Speed: " + videoElem.playbackRate.toFixed(1); 
         });
 
         //detect key press
