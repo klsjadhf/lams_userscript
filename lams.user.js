@@ -116,7 +116,7 @@
             z-index: 10;
             top: 0px;
             right: 0px;
-            opacity: .5;
+            opacity: .3;
             background-color: black;   
             visibility: visible;
         `;
