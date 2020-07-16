@@ -25,7 +25,7 @@ Down arrow | Decrease volume
 
 # Future features
 - [x] Hide download button and playback speed
-- [ ] Change speed without keyboard
+- [x] Change speed without keyboard
 - [ ] Set custom keyboard shortcuts and default playback rate
 - [ ] Gesture support for touchscreens?
 - [ ] Add pictures/video for installation guide
