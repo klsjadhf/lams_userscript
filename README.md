@@ -16,13 +16,14 @@ P | Play/pause
 S | Set playback rate to 2
 M | Toggle mute
 F | Toggle fullscreen
+H | Toggle download button visibility
 Left arrow | Rewind 3 seconds
 Right arrow | Foward 3 seconds
 Up arrow | Increase volume
 Down arrow | Decrease volume
 
 # Future features
-- [ ] Hide download button and playback speed
+- [x] Hide download button and playback speed
 - [ ] Change speed without keyboard
 - [ ] Set custom keyboard shortcuts and default playback rate
 - [ ] Gesture support for touchscreens?
