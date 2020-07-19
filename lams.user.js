@@ -30,7 +30,18 @@
     if(document.URL.match(/https:\/\/lams\.ntu\.edu\.sg\/lams\/tool\/lanb11\/learning\/learner\.do/)){
         //if user pressed key in wrong window, send to iframe
         document.addEventListener("keydown", (keydownEvent) =>{
-            keydownEvent.preventDefault(); //prevent scrolling
+            switch(keydownEvent.key){
+                case "ArrowLeft":
+                case "ArrowRight":
+                case "ArrowUp":
+                case "ArrowDown":
+                case " ":
+                    keydownEvent.preventDefault(); //prevent scrolling
+                default:
+                    break;
+            }
+            // keydownEvent.preventDefault(); //prevent scrolling
+            // document.body.style.position = "fixed"; //disable scrolling
             GM_setValue("pressedKey", getPressedkey(keydownEvent));
             // console.log(GM_getValue("pressedKey").pressedKey);
         });
@@ -208,7 +219,17 @@
 
         //detect key press
         document.addEventListener("keydown", (keydownEvent)=>{
-            keydownEvent.preventDefault(); //prevent scrolling
+            switch(keydownEvent.key){
+                case "ArrowLeft":
+                case "ArrowRight":
+                case "ArrowUp":
+                case "ArrowDown":
+                case " ":
+                    keydownEvent.preventDefault(); //prevent scrolling
+                default:
+                    break;
+            }
+            // keydownEvent.preventDefault(); //prevent scrolling
             onKeypress(getPressedkey(keydownEvent));
         });
 
@@ -224,11 +245,11 @@
         var videoElem = document.querySelector("#Video1_html5_api");
         var newTime;
 
-        // console.log("pressed " + keyInfo.pressedKey);
+        console.log("pressed " + keyInfo.pressedKey);
 
         if(!keyInfo.repeat){ //keys that should not press and hold
             //play/pause
-            if(keyInfo.pressedKey === "p" || keyInfo.pressedKey === "P"){
+            if(keyInfo.pressedKey === "p" || keyInfo.pressedKey === "P" || keyInfo.pressedKey === " "){
                 document.querySelector(".vjs-play-control").click();
                 console.log("play/pause video");
             }
