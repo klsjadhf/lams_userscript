@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         lams
 // @namespace    https://github.com/klsjadhf/lams_userscript
-// @version      1.2.0
+// @version      1.2.1
 // @description  change lams video speed and download video button
 // @author       klsjadhf
 // @homepage     https://github.com/klsjadhf/lams_userscript
@@ -40,8 +40,6 @@
                 default:
                     break;
             }
-            // keydownEvent.preventDefault(); //prevent scrolling
-            // document.body.style.position = "fixed"; //disable scrolling
             GM_setValue("pressedKey", getPressedkey(keydownEvent));
             // console.log(GM_getValue("pressedKey").pressedKey);
         });
@@ -229,7 +227,6 @@
                 default:
                     break;
             }
-            // keydownEvent.preventDefault(); //prevent scrolling
             onKeypress(getPressedkey(keydownEvent));
         });
 
@@ -245,7 +242,7 @@
         var videoElem = document.querySelector("#Video1_html5_api");
         var newTime;
 
-        console.log("pressed " + keyInfo.pressedKey);
+        // console.log("pressed " + keyInfo.pressedKey);
 
         if(!keyInfo.repeat){ //keys that should not press and hold
             //play/pause
