@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         lams
 // @namespace    https://github.com/klsjadhf/lams_userscript
-// @version      1.13
+// @version      1.14
 // @description  change lams video speed and download video button
 // @author       klsjadhf
 // @homepage     https://github.com/klsjadhf/lams_userscript
@@ -30,6 +30,7 @@
     if(document.URL.match(/https:\/\/lams\.ntu\.edu\.sg\/lams\/tool\/lanb11\/learning\/learner\.do/)){
         //if user pressed key in wrong window, send to iframe
         document.addEventListener("keydown", (keydownEvent) =>{
+            keydownEvent.preventDefault(); //prevent scrolling
             GM_setValue("pressedKey", getPressedkey(keydownEvent));
             // console.log(GM_getValue("pressedKey").pressedKey);
         });
@@ -207,6 +208,7 @@
 
         //detect key press
         document.addEventListener("keydown", (keydownEvent)=>{
+            keydownEvent.preventDefault(); //prevent scrolling
             onKeypress(getPressedkey(keydownEvent));
         });
 
