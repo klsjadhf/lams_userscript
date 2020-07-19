@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         lams
 // @namespace    https://github.com/klsjadhf/lams_userscript
-// @version      1.14
+// @version      1.2.0
 // @description  change lams video speed and download video button
 // @author       klsjadhf
 // @homepage     https://github.com/klsjadhf/lams_userscript
-// @updateURL    https://github.com/klsjadhf/lams_userscript/raw/master/lams.user.js
-// @downloadURL  https://github.com/klsjadhf/lams_userscript/raw/master/lams.user.js
+// @updateURL    https://github.com/klsjadhf/lams_userscript/releases/latest/download/lams.user.js
+// @downloadURL  https://github.com/klsjadhf/lams_userscript/releases/latest/download/lams.user.js
 // @match        http*://presentur.ntu.edu.sg/aculearn-idm/v8/studio/embed.asp*
 // @match        http*://lams.ntu.edu.sg/lams/tool/lanb11/learning/learner.do*
 // @grant        GM_download
