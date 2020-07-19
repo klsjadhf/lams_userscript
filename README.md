@@ -9,7 +9,7 @@ Adds a download button and keyboard shortcuts to NTU LAMS videos.
 # Keyboard shortcuts
 Key | Function
 ----|---------
-P | Play/pause
+P, spacebar | Play/pause
 , | Decrease playabck rate by 0.5
 . | Increase playback rate by 0.5
 < | Increase playback rate by 0.1
