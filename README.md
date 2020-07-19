@@ -3,7 +3,7 @@ Adds a download button and keyboard shortcuts to NTU LAMS videos.
 
 # Installation
 1. Install a userscript manager such as [Tampermonkey](https://www.tampermonkey.net/).
-2. Open the .user.js file and click on raw or click [here](https://github.com/klsjadhf/lams_userscript/raw/master/lams.user.js).
+2. Open the .user.js file in latest release or click [here](https://github.com/klsjadhf/lams_userscript/releases/latest/download/lams.user.js).
 3. Click install in the Tampermonkey dashboard.
 
 # Keyboard shortcuts
