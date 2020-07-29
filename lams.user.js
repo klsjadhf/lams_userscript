@@ -64,13 +64,22 @@
             var videoNamePath = ".panel-body > .panel"
             var videoNameElem = document.querySelector(videoNamePath);
             if( document.querySelector(".panel-body") !== null){
-                var name = videoNameElem.innerText.trim()
-                // console.log(name.indexOf("\n"));
-                if(name.indexOf("\n") !== -1){ //get only first sentence
-                    name = name.slice(0, name.indexOf("\n"));
-                }
-                // console.log(name);
-                GM_setValue("videoName", name);
+                var vidname = txtBiggestFont();
+                console.log("vidname: " + vidname);
+                // var childnodes = document.querySelector(".panel-body").childNodes;
+                // console.log( childnodes);
+                // for(var node of childnodes){
+                //     if(node.nodeType == 1){ //find element nodes{
+                //         console.log(node.style.fontSize);
+                //     }
+                // }
+                // var name = videoNameElem.innerText.trim()
+                // // console.log(name.indexOf("\n"));
+                // if(name.indexOf("\n") !== -1){ //get only first sentence
+                //     name = name.slice(0, name.indexOf("\n"));
+                // }
+                // // console.log(name);
+                GM_setValue("videoName", vidname);
             }
 
             //set focus back to video every 500ms(workaround for fullscreen)
@@ -305,14 +314,14 @@
         }
         //rewind
         else if(keyInfo.pressedKey === "ArrowLeft"){
-            newTime = fracPlusSub("-", arvplayer.currentTime(), 3)
+            newTime = fracPlusSub("-", arvplayer.currentTime(), 5)
             if(newTime <= 0) arvplayer.currentTime(0);
             else arvplayer.currentTime(newTime);
             console.log("rewind " + arvplayer.currentTime());
         }
         //foward
         else if(keyInfo.pressedKey === "ArrowRight"){
-            newTime = fracPlusSub("+", arvplayer.currentTime(), 3)
+            newTime = fracPlusSub("+", arvplayer.currentTime(), 5)
             if(newTime >= arvplayer.duration()) arvplayer.currentTime(arvplayer.duration());
             else arvplayer.currentTime(newTime);
             console.log("foward " + arvplayer.currentTime());
@@ -356,6 +365,29 @@
             return ((val1*100 - val2*100)/100).toFixed(2);
         }
         else return 0.0;
+    }
+
+    //returns text on page with biggest font size
+    function txtBiggestFont(){
+        var xpath = "//text()";
+        var textNodes = document.evaluate(xpath, document, null, XPathResult.ANY_TYPE,null); //get all text nodes
+        var result = textNodes.iterateNext();
+        var maxFont = 0;
+        var maxFontElm;
+        // console.log(textNodes);
+        while (result) {
+            var fontsize = parseInt(window.getComputedStyle(result.parentElement).fontSize);
+            if(fontsize > maxFont){
+                maxFont = fontsize;
+                maxFontElm = result.parentElement;
+                // console.log(result.parentElement.innerText);
+                // console.log(fontsize);
+            }
+            result = textNodes.iterateNext();
+        }
+        // console.log(maxFontElm.innerText);
+        // console.log(maxFont);
+        return maxFontElm.innerText;
     }
 })();
 
