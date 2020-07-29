@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         lams
 // @namespace    https://github.com/klsjadhf/lams_userscript
-// @version      1.2.1
+// @version      1.2.2
 // @description  change lams video speed and download video button
 // @author       klsjadhf
 // @homepage     https://github.com/klsjadhf/lams_userscript
@@ -66,19 +66,6 @@
             if( document.querySelector(".panel-body") !== null){
                 var vidname = txtBiggestFont();
                 console.log("vidname: " + vidname);
-                // var childnodes = document.querySelector(".panel-body").childNodes;
-                // console.log( childnodes);
-                // for(var node of childnodes){
-                //     if(node.nodeType == 1){ //find element nodes{
-                //         console.log(node.style.fontSize);
-                //     }
-                // }
-                // var name = videoNameElem.innerText.trim()
-                // // console.log(name.indexOf("\n"));
-                // if(name.indexOf("\n") !== -1){ //get only first sentence
-                //     name = name.slice(0, name.indexOf("\n"));
-                // }
-                // // console.log(name);
                 GM_setValue("videoName", vidname);
             }
 
@@ -374,32 +361,14 @@
         var result = textNodes.iterateNext();
         var maxFont = 0;
         var maxFontElm;
-        // console.log(textNodes);
         while (result) {
             var fontsize = parseInt(window.getComputedStyle(result.parentElement).fontSize);
             if(fontsize > maxFont){
                 maxFont = fontsize;
                 maxFontElm = result.parentElement;
-                // console.log(result.parentElement.innerText);
-                // console.log(fontsize);
             }
             result = textNodes.iterateNext();
         }
-        // console.log(maxFontElm.innerText);
-        // console.log(maxFont);
         return maxFontElm.innerText;
     }
 })();
-
-/*
-localStorage.getItem('arvplayer-playbackRate');
-localStorage.setItem('arvplayer-playbackRate',i+1);
-var arv_rate_list
-set_arvRate(player);
-function set_arvRate(player)
-hideIndeximg()
-player.pause();
-
-btn zindex 10
-position relative
-*/
