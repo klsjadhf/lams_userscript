@@ -369,6 +369,10 @@
             }
             result = textNodes.iterateNext();
         }
-        return maxFontElm.innerText;
+        var name = maxFontElm.innerText.trim();
+        if(name.indexOf("\n") !== -1){ //get only first sentence
+            name = name.slice(0, name.indexOf("\n"));
+        }
+        return name;
     }
 })();
