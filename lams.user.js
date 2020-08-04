@@ -187,6 +187,9 @@
         var slowBtn = document.createElement("button");
         slowBtn.id = "slowBtn";
         slowBtn.style = buttonCSS;
+        slowBtn.style.backgroundColor = "white";
+        slowBtn.style.color = "black";
+        slowBtn.style.borderRadius = "3px";
         slowBtn.innerHTML = "&#x2796;";
         slowBtn.addEventListener("click", function(){
             onKeypress({
@@ -201,6 +204,9 @@
         var fastBtn = document.createElement("button");
         fastBtn.id = "fastBtn";
         fastBtn.style = buttonCSS;
+        fastBtn.style.backgroundColor = "white";
+        fastBtn.style.color = "black";
+        fastBtn.style.borderRadius = "3px";
         fastBtn.innerHTML = "&#x2795;";
         fastBtn.addEventListener("click", function(){
             onKeypress({
@@ -356,7 +362,7 @@
 
     //returns text on page with biggest font size
     function txtBiggestFont(){
-        var xpath = "//text()";
+        var xpath = "//*[contains(@class, 'panel-body')]/text()";
         var textNodes = document.evaluate(xpath, document, null, XPathResult.ANY_TYPE,null); //get all text nodes
         var result = textNodes.iterateNext();
         var maxFont = 0;
@@ -364,6 +370,7 @@
         while (result) {
             var fontsize = parseInt(window.getComputedStyle(result.parentElement).fontSize);
             if(fontsize > maxFont){
+                // console.log(result.parentElement);
                 maxFont = fontsize;
                 maxFontElm = result.parentElement;
             }
