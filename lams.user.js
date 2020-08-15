@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         lams
 // @namespace    https://github.com/klsjadhf/lams_userscript
-// @version      1.3.0
+// @version      1.3.1
 // @description  change lams video speed and download video button
 // @author       klsjadhf
 // @homepage     https://github.com/klsjadhf/lams_userscript
@@ -9,7 +9,8 @@
 // @downloadURL  https://github.com/klsjadhf/lams_userscript/releases/latest/download/lams.user.js
 // @match        http*://presentur.ntu.edu.sg/aculearn-idm/v8/studio/embed.asp*
 // @match        http*://lams.ntu.edu.sg/lams/tool/lanb11/learning/learner.do*
-// @match        http*://ntulearn.ntu.edu.sg/webapps/blackboard/content/listContent.jsp?*
+// @match        http*://ntulearn.ntu.edu.sg/webapps/blackboard/content/listContent.jsp*
+// @match        http*://*.ntu.edu.sg/aculearn-me/v9/studio/play.asp*
 // @grant        GM_download
 // @grant        GM_listValues
 // @grant        GM_deleteValue
@@ -45,7 +46,8 @@
             // console.log(GM_getValue("pressedKey").pressedKey);
         });
     }
-    else if(document.URL.match(/https:\/\/presentur\.ntu\.edu\.sg\/aculearn-idm\/v8\/studio\/embed\.asp/)){
+    else if(document.URL.match(/https:\/\/presentur\.ntu\.edu\.sg\/aculearn-idm\/v8\/studio\/embed\.asp/) || document.URL.match(/ntu\.edu\.sg\/aculearn-me\/v9\/studio\/play\.asp/)){
+        console.log("in vid player");
         //get keypress from lams window
         GM_addValueChangeListener("pressedKey", function(name, old_value, new_value, remote) {
             if(remote){
@@ -77,7 +79,7 @@
         }
 
         //for video player in iframe
-        else if(document.URL.match(/https:\/\/presentur\.ntu\.edu\.sg\/aculearn-idm\/v8\/studio\/embed\.asp/)){
+        else if(document.URL.match(/https:\/\/presentur\.ntu\.edu\.sg\/aculearn-idm\/v8\/studio\/embed\.asp/) || document.URL.match(/ntu\.edu\.sg\/aculearn-me\/v9\/studio\/play\.asp/)){
             //remove annoying box
             if(document.querySelector("#div_index") !== null){
                 // console.log(document.querySelector("#div_index").style.width);
@@ -90,16 +92,17 @@
             //video
             if(document.querySelector("#Video1_html5_api") !== null){
                 if (videoOnLoadAdded === false){
+                    console.log("add canplay listener");
                     videoOnLoadAdded = true;
                     document.querySelector("#Video1_html5_api").addEventListener("canplay", video1Onload);
                 }
             }
         }
-        else if(document.URL.match(/https:\/\/ntulearn\.ntu\.edu\.sg\/webapps\/blackboard\/content\/listContent\.jsp\?/)){
+        else if(document.URL.match(/https:\/\/ntulearn\.ntu\.edu\.sg\/webapps\/blackboard\/content\/listContent\.jsp/)){
             var aList = document.getElementsByTagName("a");
             for (var link of aList){
                 console.log(link.href);
-                if(link.href.match(/https:\/\/presentur\.ntu\.edu\.sg\/aculearn-idm\/v8\/studio\/embed\.asp/)){
+                if(link.href.match(/https:\/\/presentur\.ntu\.edu\.sg\/aculearn-idm\/v8\/studio\/embed\.asp/) || link.href.match(/\/webapps\/Acu-AcuLe@rn-BB5dcb73f79ba4c\/am\/start_play_studio\.jsp/)){
                     console.log(link.text);
                     link.addEventListener("click", getLinkName);
                     link.addEventListener("auxclick", getLinkName); //for middle click
