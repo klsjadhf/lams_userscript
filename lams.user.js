@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         lams
 // @namespace    https://github.com/klsjadhf/lams_userscript
-// @version      1.2.2
+// @version      1.3.0
 // @description  change lams video speed and download video button
 // @author       klsjadhf
 // @homepage     https://github.com/klsjadhf/lams_userscript
@@ -55,25 +55,6 @@
             }
         });
     }
-    // else if(document.URL.match(/https:\/\/ntulearn\.ntu\.edu\.sg\/webapps\/blackboard\/content\/listContent\.jsp\?/)){
-    //     var aList = document.getElementsByTagName("a");
-    //     for (var link of aList){
-    //         console.log(link);
-    //         // link.addEventListener("click", ()=>{
-    //         //     console.log(this);
-    //         //     alert("clicked");
-    //         // });
-    //     }
-    //     // alert("ntulearn");
-    //     // //get keypress from lams window
-    //     // GM_addValueChangeListener("pressedKey", function(name, old_value, new_value, remote) {
-    //     //     if(remote){
-    //     //         // console.log("changed to " + new_value.pressedKey);
-    //     //         onKeypress(new_value);
-    //     //         GM_setValue("pressedKey", ""); //clear pressed key
-    //     //     }
-    //     // });
-    // }
 
     var observer = new MutationObserver(function(){
         // console.log("DOM changed");
@@ -121,26 +102,16 @@
                 if(link.href.match(/https:\/\/presentur\.ntu\.edu\.sg\/aculearn-idm\/v8\/studio\/embed\.asp/)){
                     console.log(link.text);
                     link.addEventListener("click", getLinkName);
+                    link.addEventListener("auxclick", getLinkName); //for middle click
                 }
             }
-            // alert("ntulearn");
-            // //get keypress from lams window
-            // GM_addValueChangeListener("pressedKey", function(name, old_value, new_value, remote) {
-            //     if(remote){
-            //         // console.log("changed to " + new_value.pressedKey);
-            //         onKeypress(new_value);
-            //         GM_setValue("pressedKey", ""); //clear pressed key
-            //     }
-            // });
         }
     });
     observer.observe(document, {childList: true, subtree: true});
 
     function getLinkName(){
-        // console.log(this);
         console.log("vidname: " + this.text);
         GM_setValue("videoName", this.text);
-        // alert("clicked");
     }
 
     function video1Onload(){
