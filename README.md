@@ -24,13 +24,10 @@ Up arrow | Increase volume
 Down arrow | Decrease volume
 
 # Future features
-- [x] Hide download button and playback speed
-- [x] Change speed without keyboard
 - [ ] Set custom keyboard shortcuts and default playback rate
 - [ ] Gesture support for touchscreens?
 - [ ] Add pictures/video for installation guide
 
 # Known bugs
-- [x] Cannot exit fullscreen using fullscreen button due to cross origin error
-- [x] Scrolling if changing volume while not in fulllscreen
 - [ ] Some subjects cannot get correct video name
+- [ ] Spacebar sometimes dosen't pause
