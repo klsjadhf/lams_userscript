@@ -251,6 +251,18 @@
             }
             onKeypress(getPressedkey(keydownEvent));
         });
+        document.addEventListener("keyup", (keyupEvent)=>{ //prevent button press
+            switch(keyupEvent.key){
+                case "ArrowLeft":
+                case "ArrowRight":
+                case "ArrowUp":
+                case "ArrowDown":
+                case " ":
+                    keyupEvent.preventDefault(); //prevent scrolling
+                default:
+                    break;
+            }
+        });
 
         document.querySelector(".arv_fullscreenButton").addEventListener("click", ()=>{
             // console.log("exit fullscreen");
