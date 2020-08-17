@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         lams
 // @namespace    https://github.com/klsjadhf/lams_userscript
-// @version      1.3.1
+// @version      1.3.2
 // @description  change lams video speed and download video button
 // @author       klsjadhf
 // @homepage     https://github.com/klsjadhf/lams_userscript
