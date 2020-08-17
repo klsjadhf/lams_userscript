@@ -31,4 +31,4 @@ Down arrow | Decrease volume
 
 # Known bugs
 - [ ] Some subjects cannot get correct video name
-- [ ] Spacebar sometimes dosen't pause
+- [x] Spacebar sometimes dosen't pause
