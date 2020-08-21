@@ -31,4 +31,6 @@ Down arrow | Decrease volume
 
 # Known bugs
 - [ ] Some subjects cannot get correct video name
-- [x] Spacebar sometimes dosen't pause
+- [x] Spacebar sometimes dosen't pause  
+
+If having download problems with tampermonkey V4.11.6117 and firefox, go to tampermonkey settings and change config mode to advanced. Then scroll down to "download mode" and change to browser api.
