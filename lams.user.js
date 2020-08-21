@@ -8,7 +8,7 @@
 // @updateURL    https://github.com/klsjadhf/lams_userscript/releases/latest/download/lams.user.js
 // @downloadURL  https://github.com/klsjadhf/lams_userscript/releases/latest/download/lams.user.js
 // @match        http*://presentur.ntu.edu.sg/aculearn-idm/v8/studio/embed.asp*
-// @match        http*://lams.ntu.edu.sg/lams/tool/lanb11/learning/learner.do*
+// @match        http*://lams.ntu.edu.sg/lams/*
 // @match        http*://ntulearn.ntu.edu.sg/webapps/blackboard/content/listContent.jsp*
 // @match        http*://*.ntu.edu.sg/aculearn-me/v9/studio/play.asp*
 // @grant        GM_download
@@ -29,7 +29,7 @@
 
     var videoOnLoadAdded = false;
 
-    if(document.URL.match(/https:\/\/lams\.ntu\.edu\.sg\/lams\/tool\/lanb11\/learning\/learner\.do/)){
+    if(document.URL.match(/https:\/\/lams\.ntu\.edu\.sg\/lams/)){
         //if user pressed key in wrong window, send to iframe
         document.addEventListener("keydown", (keydownEvent) =>{
             switch(keydownEvent.key){
@@ -62,7 +62,7 @@
         // console.log("DOM changed");
 
         //get video name from main site
-        if(document.URL.match(/https:\/\/lams\.ntu\.edu\.sg\/lams\/tool\/lanb11\/learning\/learner\.do/)){
+        if(document.URL.match(/https:\/\/lams\.ntu\.edu\.sg\/lams/)){
             // console.log(document.URL.match(/https:\/\/lams.ntu.edu.sg\/lams\/tool\/lanb11\/learning\/learner.do*/));
             var videoNamePath = ".panel-body > .panel"
             var videoNameElem = document.querySelector(videoNamePath);
