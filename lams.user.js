@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         lams
 // @namespace    https://github.com/klsjadhf/lams_userscript
-// @version      1.3.2
+// @version      1.3.3
 // @description  change lams video speed and download video button
 // @author       klsjadhf
 // @homepage     https://github.com/klsjadhf/lams_userscript
@@ -74,6 +74,7 @@
 
             //set focus back to video every 500ms(workaround for fullscreen)
             if(document.querySelector("iframe") && !videoOnLoadAdded){
+                document.getElementsByTagName("iframe")[0].setAttribute("allowfullscreen", "yes");
                 window.setInterval( ()=>document.querySelector("iframe").focus(), 500);
             }
         }
