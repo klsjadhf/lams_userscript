@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         lams
 // @namespace    https://github.com/klsjadhf/lams_userscript
-// @version      1.3.3
+// @version      1.3.4
 // @description  change lams video speed and download video button
 // @author       klsjadhf
 // @homepage     https://github.com/klsjadhf/lams_userscript
@@ -125,9 +125,14 @@
 
         // console.log(videoName.indexOf(":"));
 
-        videoName = videoName.replace(/[*/:<>?\\|]/g, s =>
-            String.fromCharCode(s.charCodeAt(0) + 0xFF00 - 0x20));
-        videoName += ".mp4";
+        if (videoName.length == 0){
+            videoName = "video.mp4";
+        }
+        else{
+            videoName = videoName.replace(/[*/:<>?\\|]/g, s =>
+                String.fromCharCode(s.charCodeAt(0) + 0xFF00 - 0x20));
+            videoName += ".mp4";
+        }
         
         console.log("video1 canplay");
         console.log(videoName);
