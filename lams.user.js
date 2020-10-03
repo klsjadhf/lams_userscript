@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         lams
 // @namespace    https://github.com/klsjadhf/lams_userscript
-// @version      1.3.5
+// @version      1.4.0
 // @description  change lams video speed and download video button
 // @author       klsjadhf
 // @homepage     https://github.com/klsjadhf/lams_userscript
@@ -292,19 +292,17 @@
                 event.preventDefault(); //prevent scrolling               
                 var x = event.touches[0].clientX - touch_x;
                 var y = event.touches[0].clientY - touch_y;
-                console.log("x: " + String(x) + ", y: " + String(y));
+                // console.log("x: " + String(x) + ", y: " + String(y));
                 if(Math.abs(x)>touch_thres && Math.abs(y)<touch_thres ){ //horizontal movement
                     var newTime = arvplayer.currentTime() + (x/100);
                     if(newTime <= 0) arvplayer.currentTime(0);                    
                     else if(newTime >= arvplayer.duration()) arvplayer.currentTime(arvplayer.duration());
                     else arvplayer.currentTime(newTime);
-                    console.log("hor x: " + String(x) + ", newTime: " + String(newTime));
+                    console.log("hor x: " + String(x) + ", newTime: " + String(newTime) + ", time: " + String(arvplayer.currentTime()));
                 }
                 else if(Math.abs(y)>touch_thres && Math.abs(x)<touch_thres ){ //vertical movement
-                    // console.log(arvplayer.volume());
-                    var new_vol = parseFloat(arvplayer.volume()) - (y/1000);
+                    var new_vol = parseFloat(arvplayer.volume()) - (y/20000);
                     arvplayer.volume(new_vol);
-                    // arvplayer.volume(fracPlusSub("+", parseFloat(arvplayer.volume()), 0.05));
                     console.log("ver y: " + String(y) + ", new vol: " + String(new_vol) + ", vol: "+ String(arvplayer.volume()));
                 }
             }
