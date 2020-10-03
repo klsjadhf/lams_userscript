@@ -122,6 +122,9 @@
         var video1Src = "";
         var videoName = GM_getValue("videoName", "video.mp4");
         var videoElem = document.querySelector("#Video1_html5_api");
+        var touch_x = 0; //for touch events
+        var touch_y = 0;
+        var touch_thres = 100;
 
         // console.log(videoName.indexOf(":"));
 
@@ -272,6 +275,40 @@
                 default:
                     break;
             }
+        });
+
+        //touch controls
+        videoElem.addEventListener("touchstart", (event)=>{
+            if(event.targetTouches.length === 1){   //check only one finger touching screen  
+                // event.preventDefault(); //prevent scrolling               
+                touch_x = event.touches[0].clientX;
+                touch_y = event.touches[0].clientY;
+                console.log("touch start");
+                // console.log("x: " + String(x) + ", y: " + String(y));
+            }
+        });
+        videoElem.addEventListener("touchmove", (event)=>{
+            if(event.targetTouches.length === 1){   //check only one finger touching screen  
+                event.preventDefault(); //prevent scrolling               
+                var x = event.touches[0].clientX - touch_x;
+                var y = event.touches[0].clientY - touch_y;
+                console.log("x: " + String(x) + ", y: " + String(y));
+                if(Math.abs(x)>touch_thres && Math.abs(y)<touch_thres ){ //horizontal movement
+                    var newTime = arvplayer.currentTime() + (x/100);
+                    if(newTime <= 0) arvplayer.currentTime(0);                    
+                    else if(newTime >= arvplayer.duration()) arvplayer.currentTime(arvplayer.duration());
+                    else arvplayer.currentTime(newTime);
+                    console.log("hor x: " + String(x) + ", newTime: " + String(newTime));
+                }
+                else if(Math.abs(y)>touch_thres && Math.abs(x)<touch_thres ){ //vertical movement
+                    // console.log(arvplayer.volume());
+                    var new_vol = parseFloat(arvplayer.volume()) - (y/1000);
+                    arvplayer.volume(new_vol);
+                    // arvplayer.volume(fracPlusSub("+", parseFloat(arvplayer.volume()), 0.05));
+                    console.log("ver y: " + String(y) + ", new vol: " + String(new_vol) + ", vol: "+ String(arvplayer.volume()));
+                }
+            }
+            // console.log(event.changedTouches);
         });
 
         document.querySelector(".arv_fullscreenButton").addEventListener("click", ()=>{
