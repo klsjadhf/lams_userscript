@@ -26,7 +26,7 @@ Down arrow | Decrease volume
 # Future features
 - [x] Add support for videos in ntulearn
 - [ ] Set custom keyboard shortcuts and default playback rate
-- [ ] Gesture support for touchscreens?
+- [x] Gesture support for touchscreens?
 - [ ] Add pictures/video for installation guide
 
 # Known bugs
