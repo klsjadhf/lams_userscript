@@ -124,7 +124,7 @@
         var videoElem = document.querySelector("#Video1_html5_api");
         var touch_x = 0; //for touch events
         var touch_y = 0;
-        var touch_thres = 100;
+        var touch_thres = 50;
 
         // console.log(videoName.indexOf(":"));
 
