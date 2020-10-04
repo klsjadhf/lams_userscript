@@ -23,6 +23,10 @@ Right arrow | Foward 3 seconds
 Up arrow | Increase volume
 Down arrow | Decrease volume
 
+# Touch gestures
+Slide up / down -> volume  
+Slide left / right -> foward / rewind
+
 # Future features
 - [x] Add support for videos in ntulearn
 - [ ] Set custom keyboard shortcuts and default playback rate
