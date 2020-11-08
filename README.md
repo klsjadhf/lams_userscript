@@ -17,11 +17,12 @@ P, spacebar | Play/pause
 S | Set playback rate to 2
 M | Toggle mute
 F | Toggle fullscreen
-H | Toggle download button visibility
+H | Toggle menu visibility
 Left arrow | Rewind 3 seconds
 Right arrow | Foward 3 seconds
 Up arrow | Increase volume
 Down arrow | Decrease volume
+D | Download video
 
 # Touch gestures
 Slide up / down -> volume  
@@ -31,11 +32,10 @@ Slide left / right -> foward / rewind
 - [x] Add support for videos in ntulearn
 - [ ] Set custom keyboard shortcuts and default playback rate
 - [x] Gesture support for touchscreens?
-- [ ] Download shortcut key
+- [x] Download shortcut key
 - [ ] Add pictures/video for installation guide
 
 # Known bugs
 - [ ] Some subjects cannot get correct video name
-- [x] Spacebar sometimes dosen't pause  
 
 If having download problems with tampermonkey V4.11.6117 and firefox, go to tampermonkey settings and change config mode to advanced. Then scroll down to "download mode" and change to browser api. After that, restart tampermonkey.
