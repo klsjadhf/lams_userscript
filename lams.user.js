@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         lams
 // @namespace    https://github.com/klsjadhf/lams_userscript
-// @version      1.4.0
+// @version      1.5.0
 // @description  change lams video speed and download video button
 // @author       klsjadhf
 // @homepage     https://github.com/klsjadhf/lams_userscript
@@ -118,9 +118,14 @@
         GM_setValue("videoName", this.text);
     }
 
+    
+    var video1Src = "";
+    var videoName = "video.mp4";
+
     function video1Onload(){
-        var video1Src = "";
-        var videoName = GM_getValue("videoName", "video.mp4");
+        // var video1Src = "";
+        // var videoName = GM_getValue("videoName", "video.mp4");
+        videoName = GM_getValue("videoName", "video.mp4");
         var videoElem = document.querySelector("#Video1_html5_api");
         var touch_x = 0; //for touch events
         var touch_y = 0;
@@ -369,6 +374,11 @@
                     document.querySelector("#buttonContainer").style.visibility = "visible";
                 }
                 console.log("hide buttons " + document.querySelector("#buttonContainer").style.visibility);
+            }
+            //download video
+            else if(keyInfo.pressedKey === "d" || keyInfo.pressedKey === "D"){
+                GM_download({url:video1Src, name:videoName});
+                console.log("download video " + videoName + " from " + video1Src);
             }
         }
         //allowed press and hold
