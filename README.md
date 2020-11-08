@@ -31,6 +31,7 @@ Slide left / right -> foward / rewind
 - [x] Add support for videos in ntulearn
 - [ ] Set custom keyboard shortcuts and default playback rate
 - [x] Gesture support for touchscreens?
+- [ ] Download shortcut key
 - [ ] Add pictures/video for installation guide
 
 # Known bugs
