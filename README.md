@@ -19,23 +19,25 @@ M | Toggle mute
 F | Toggle fullscreen
 H | Toggle menu visibility
 Left arrow | Rewind 3 seconds
-Right arrow | Foward 3 seconds
+Right arrow | Forward 3 seconds
 Up arrow | Increase volume
 Down arrow | Decrease volume
 D | Download video
 
 # Touch gestures
 Slide up / down -> volume  
-Slide left / right -> foward / rewind
+Slide left / right -> forward / rewind
 
 # Future features
 - [x] Add support for videos in ntulearn
 - [ ] Set custom keyboard shortcuts and default playback rate
 - [x] Gesture support for touchscreens?
 - [x] Download shortcut key
-- [ ] Add pictures/video for installation guide
+- [ ] Add pictures/video for installation guide  
+- [ ] Account for playback rate for forward/rewind
 
 # Known bugs
 - [ ] Some subjects cannot get correct video name
+- [ ] Video player changed to kaltura everything is broken now :(
 
 If having download problems with tampermonkey V4.11.6117 and firefox, go to tampermonkey settings and change config mode to advanced. Then scroll down to "download mode" and change to browser api. After that, restart tampermonkey.
