@@ -81,8 +81,8 @@
                 kaltura_iframe = document.getElementById("kaltura_player_1595401760_ifp").contentWindow;
                 var vid = kaltura_iframe.kaltura_player_1595401760;
 
-                console.log("vid");
-                console.log(vid);
+                // console.log("vid");
+                // console.log(vid);
 
                 if ( (videoOnLoadAdded === false) && vid){
                     vidPlayerType = "kaltura"
@@ -92,7 +92,7 @@
                     // vid.addEventListener("loadstart", kaltura_onLoad);
                     vid.addEventListener("loadstart", videoOnload);
 
-                    window.setInterval( ()=>kaltura_iframe.focus(), 500);
+                    window.setInterval( ()=>vid.focus(), 500);
                 }
             }
 
@@ -146,34 +146,6 @@
         console.log("vidname: " + this.text);
         GM_setValue("videoName", this.text);
     }
-
-    function kaltura_onLoad(){
-        var videoElem = kaltura_iframe.document.getElementById("pid_kaltura_player_1595401760");
-        var vidPlayer = kaltura_iframe.kaltura_player_1595401760;
-
-        
-        var vidName = vidPlayer.kalturaPlayerMetaData.name;
-        var downloadUrl = "none"
-
-        // find source with highest resolution, assume is last item in array without data-flavorid
-        // with data-flavorid is playlist type
-        for (let i=vidPlayer.kalturaFlavors.length-1; i>=0; i--){
-            console.log(vidPlayer.kalturaFlavors[i]["data-flavorid"]);
-            if (vidPlayer.kalturaFlavors[i]["data-flavorid"] === undefined){
-                downloadUrl = vidPlayer.kalturaFlavors[i].src;
-                break;
-            }
-        }
-
-        console.log("test");
-        console.log( kaltura_iframe.kalturaIframePackageData );
-        console.log( videoElem.getAttribute("kentryid") );
-        vidPlayer.play();
-        console.log(vidName);
-        console.log(downloadUrl);
-        
-    }
-
     
     var videoSrc = "";
     var videoName = "video.mp4";
@@ -218,6 +190,10 @@
                     break;
                 }
             }
+
+            // stuff for selecting highest quality for playback
+            // vidPlayer.mediaElement.sources[i];
+            // vidPlayer.switchSrc()
             
             vidDoc = kaltura_iframe.document;
         }
@@ -233,7 +209,7 @@
         videoName += ".mp4";
         
         console.log("video canplay");
-        console.log(videoName);
+        console.log("video name " + videoName);
         
         console.log("video src: " + videoSrc);
 
@@ -507,7 +483,13 @@
                     else document.querySelector(".arv_fullscreenButton").click();
                 }
                 else if(vidPlayerType == "kaltura"){
-                    vidPlayer.toggleFullscreen();
+                    var isFullScreen = vidPlayer.layoutBuilder.fullScreenManager.inFullScreen;
+                    console.log("isFullScreen " + isFullScreen);
+                    // if (isFullScreen){ //use kaltura shortcut for enter fullscreen, use this for exit fullscreen only
+                        vidPlayer.toggleFullscreen();
+                        // vidPlayer.layoutBuilder.fullScreenManager.restoreWindowPlayer();
+                        // vidPlayer.layoutBuilder.fullScreenManager.doFullScreenPlayer();
+                    // }
                 }
                 console.log("fullscreen");
             }
