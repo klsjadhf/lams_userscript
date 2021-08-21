@@ -40,3 +40,4 @@ Slide left / right -> forward / rewind
 - [ ] Old player based on arvplayer not maintained anymore
 - [ ] Some keyboard shortcuts conflict with kaltura's shortcuts
 - [ ] Touch gestures not added for kaltura
+- [x] Spacebar not pausing/playing in fullscreen
