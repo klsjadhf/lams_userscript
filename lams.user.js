@@ -79,7 +79,7 @@
                 console.log("found kaltura iframe")
 
                 kaltura_iframe = document.getElementById("kaltura_player_1595401760_ifp").contentWindow;
-                var vid = kaltura_iframe.document.getElementById("pid_kaltura_player_1595401760");
+                var vid = kaltura_iframe.kaltura_player_1595401760;
 
                 console.log("vid");
                 console.log(vid);
@@ -399,12 +399,19 @@
             // console.log(event.changedTouches);
         });
 
-        document.querySelector(".arv_fullscreenButton").addEventListener("click", ()=>{
-            // console.log("exit fullscreen");
-            if(IsFullScreen()) arvplayer.exitFullscreen();
-        });
+        if (vidPlayerType == "arvplayer"){
+            videoElem.removeEventListener("canplay", videoOnload);
 
-        document.querySelector("#Video1_html5_api").removeEventListener("canplay", videoOnload);
+            document.querySelector(".arv_fullscreenButton").addEventListener("click", ()=>{
+                // console.log("exit fullscreen");
+                if(IsFullScreen()) arvplayer.exitFullscreen();
+            });
+
+            // document.querySelector("#Video1_html5_api").removeEventListener("canplay", videoOnload);
+        }
+        else if(vidPlayerType == "kaltura"){
+            videoElem.removeEventListener("loadstart", videoOnload);
+        }
     }
 
     function onKeypress(keyInfo){
