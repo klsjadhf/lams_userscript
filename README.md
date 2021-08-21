@@ -37,5 +37,6 @@ Slide left / right -> foward / rewind
 
 # Known bugs
 - [ ] Some subjects cannot get correct video name
+- [ ] Video player changed to kaltura everything is broken now :(
 
 If having download problems with tampermonkey V4.11.6117 and firefox, go to tampermonkey settings and change config mode to advanced. Then scroll down to "download mode" and change to browser api. After that, restart tampermonkey.
