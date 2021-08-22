@@ -465,11 +465,6 @@
             }
             //set saved playback speed
             else if(keyInfo.pressedKey === "s" || keyInfo.pressedKey === "S"){
-                // // console.log(videojs.getPlayers());
-                // arvplayer.playbackRate(2);
-                // // videoElem.playbackRate = 2;
-                // console.log("custom speed " + arvplayer.playbackRate());
-
                 var pbRate = 2;
 
                 if (vidPlayerType == "arvplayer"){
@@ -484,10 +479,6 @@
             }
             //mute/unmute
             else if(keyInfo.pressedKey === "m" || keyInfo.pressedKey === "M"){
-                // arvplayer.muted(!arvplayer.muted());
-                // // document.querySelector(".vjs-mute-control").click();
-                // console.log("mute " + arvplayer.muted());
-
                 var muted;
 
                 if (vidPlayerType == "arvplayer"){
@@ -502,10 +493,6 @@
             }
             //toggle fullscreen
             else if(keyInfo.pressedKey === "f" || keyInfo.pressedKey === "F"){
-                // // console.log(IsFullScreen());
-                // // arvplayer.isFullscreen(!arvplayer.isFullscreen());
-                // if(IsFullScreen()) arvplayer.exitFullscreen();
-                // else document.querySelector(".arv_fullscreenButton").click();
 
                 if (vidPlayerType == "arvplayer"){
                     if(IsFullScreen()) arvplayer.exitFullscreen();
@@ -550,64 +537,14 @@
         }
         //rewind
         else if(keyInfo.pressedKey === "ArrowLeft"){
-            // var newTime = fracPlusSub("-", arvplayer.currentTime(), 5)
-            // if(newTime <= 0) arvplayer.currentTime(0);
-            // else arvplayer.currentTime(newTime);
-            // console.log("rewind " + arvplayer.currentTime());
-
-            // var curTime;
-            // var newTime;
-
-            // if (vidPlayerType == "arvplayer"){
-            //     newTime = fracPlusSub("-", arvplayer.currentTime(), 5);
-            //     if(newTime <= 0) arvplayer.currentTime(0);
-            //     else arvplayer.currentTime(newTime);
-
-            //     curTime = arvplayer.currentTime();
-            // }
-            // // avoid conflict with kaltura keyboard shortcuts
-            // else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
-            //     newTime = fracPlusSub("-", videoElem.currentTime, 5);
-            //     if(newTime <= 0) videoElem.currentTime = 0;
-            //     else videoElem.currentTime = newTime;
-
-            //     curTime = videoElem.currentTime;
-            // }
-            // console.log("rewind " + curTime);
             console.log("rewind " + time_change("-", 5));
         }
         //forward
         else if(keyInfo.pressedKey === "ArrowRight"){
-            // var newTime = fracPlusSub("+", arvplayer.currentTime(), 5)
-            // if(newTime >= arvplayer.duration()) arvplayer.currentTime(arvplayer.duration());
-            // else arvplayer.currentTime(newTime);
-            // console.log("forward " + arvplayer.currentTime());
-
-            // var curTime;
-            // var newTime;
-            
-            // if (vidPlayerType == "arvplayer"){
-            //     newTime = fracPlusSub("+", arvplayer.currentTime(), 5);
-            //     if(newTime >= arvplayer.duration()) arvplayer.currentTime(arvplayer.duration());
-            //     else arvplayer.currentTime(newTime);
-
-            //     curTime = arvplayer.currentTime();
-            // }
-            // //avoid conflict with kaltura keyboard shortcuts
-            // else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
-            //     newTime = fracPlusSub("+", videoElem.currentTime, 5);
-            //     if(newTime >= videoElem.duration) videoElem.currentTime = videoElem.duration;
-            //     else videoElem.currentTime = newTime;
-
-            //     curTime = videoElem.currentTime;
-            // }
             console.log("forward " + time_change("+", 5));
         }
         //volume up
         else if(keyInfo.pressedKey === "ArrowUp"){
-            // arvplayer.volume(fracPlusSub("+", parseFloat(arvplayer.volume()), 0.05));
-            // console.log("volume up " + arvplayer.volume());
-
             var vol;
 
             if (vidPlayerType == "arvplayer"){
@@ -623,9 +560,6 @@
         }
         //volume down
         else if(keyInfo.pressedKey === "ArrowDown"){
-            // arvplayer.volume(fracPlusSub("-", parseFloat(arvplayer.volume()), 0.05));
-            // console.log("volume down " + arvplayer.volume());
-
             var vol;
 
             if (vidPlayerType == "arvplayer"){
