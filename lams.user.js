@@ -397,6 +397,7 @@
         }
     }
 
+    // change playback rate by certain amount dir + is speed up
     function rate_change(dir, amt){
         var pbRate;
         if (vidPlayerType == "arvplayer"){
@@ -408,6 +409,31 @@
             pbRate = videoElem.playbackRate;
         }
         return pbRate;
+    }
+
+    // change current video time by amount (forward/rewind)
+    function time_change(dir, amt){
+        var curTime;
+        var newTime;
+
+        if (vidPlayerType == "arvplayer"){
+            newTime = fracPlusSub(dir, arvplayer.currentTime(), amt);
+            if(newTime <= 0) arvplayer.currentTime(0);
+            else if(newTime >= arvplayer.duration()) arvplayer.currentTime(arvplayer.duration());
+            else arvplayer.currentTime(newTime);
+
+            curTime = arvplayer.currentTime();
+        }
+        // avoid conflict with kaltura keyboard shortcuts
+        else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
+            newTime = fracPlusSub(dir, videoElem.currentTime, amt);
+            if(newTime <= 0) videoElem.currentTime = 0;
+            else if(newTime >= videoElem.duration) videoElem.currentTime = videoElem.duration;
+            else videoElem.currentTime = newTime;
+
+            curTime = videoElem.currentTime;
+        }
+        return curTime;
     }
 
     function onKeypress(keyInfo){
@@ -431,31 +457,10 @@
             }
             //slow down
             else if(keyInfo.pressedKey === ","){
-                // var pbRate;
-                // if (vidPlayerType == "arvplayer"){
-                //     arvplayer.playbackRate(fracPlusSub("-", arvplayer.playbackRate(), 0.5));
-                //     pbRate = arvplayer.playbackRate();
-                // }
-                // else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
-                //     // vidPlayer.sendNotification('playbackRateChangeSpeed', pbRate);
-                //     videoElem.playbackRate = fracPlusSub("-", videoElem.playbackRate, 0.5);
-                //     pbRate = videoElem.playbackRate;
-                // }
-                // console.log("slow coarse " + pbRate);
                 console.log("slow coarse " + rate_change("-", 0.5) );
             }
             //speed up
             else if(keyInfo.pressedKey === "."){
-                // var pbRate;
-                // if (vidPlayerType == "arvplayer"){
-                //     arvplayer.playbackRate(fracPlusSub("+", arvplayer.playbackRate(), 0.5));
-                //     pbRate = arvplayer.playbackRate();
-                // }
-                // else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
-                //     videoElem.playbackRate = fracPlusSub("+", videoElem.playbackRate, 0.5);
-                //     pbRate = videoElem.playbackRate;
-                // }
-                // console.log("fast coarse " + pbRate);
                 console.log("fast coarse " + rate_change("+", 0.5) );
             }
             //set saved playback speed
@@ -536,35 +541,12 @@
         //allowed press and hold
         //slow down fine
         if(keyInfo.pressedKey === "<"){
-            // arvplayer.playbackRate(fracPlusSub("-", arvplayer.playbackRate(), 0.1));
-            // console.log("slow fine " + arvplayer.playbackRate());
-
-            var pbRate;
-            if (vidPlayerType == "arvplayer"){
-                arvplayer.playbackRate(fracPlusSub("-", arvplayer.playbackRate(), 0.1));
-                pbRate = arvplayer.playbackRate();
-            }
-            else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
-                videoElem.playbackRate = fracPlusSub("-", videoElem.playbackRate, 0.1);
-                pbRate = videoElem.playbackRate;
-            }
-            console.log("slow fine " + pbRate);
+            console.log("slow fine " + rate_change("-", 0.1) );
         }
         //speed up fine
         else if(keyInfo.pressedKey === ">"){
-            // arvplayer.playbackRate(fracPlusSub("+", arvplayer.playbackRate(), 0.1));
-            // console.log("fast fine " + arvplayer.playbackRate());
+            console.log("fast fine " + rate_change("+", 0.1) );
 
-            var pbRate;
-            if (vidPlayerType == "arvplayer"){
-                arvplayer.playbackRate(fracPlusSub("+", arvplayer.playbackRate(), 0.1));
-                pbRate = arvplayer.playbackRate();
-            }
-            else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
-                videoElem.playbackRate = fracPlusSub("+", videoElem.playbackRate, 0.1);
-                pbRate = videoElem.playbackRate;
-            }
-            console.log("fast fine " + pbRate);
         }
         //rewind
         else if(keyInfo.pressedKey === "ArrowLeft"){
@@ -573,25 +555,26 @@
             // else arvplayer.currentTime(newTime);
             // console.log("rewind " + arvplayer.currentTime());
 
-            var curTime;
-            var newTime;
+            // var curTime;
+            // var newTime;
 
-            if (vidPlayerType == "arvplayer"){
-                newTime = fracPlusSub("-", arvplayer.currentTime(), 5);
-                if(newTime <= 0) arvplayer.currentTime(0);
-                else arvplayer.currentTime(newTime);
+            // if (vidPlayerType == "arvplayer"){
+            //     newTime = fracPlusSub("-", arvplayer.currentTime(), 5);
+            //     if(newTime <= 0) arvplayer.currentTime(0);
+            //     else arvplayer.currentTime(newTime);
 
-                curTime = arvplayer.currentTime();
-            }
-            // avoid conflict with kaltura keyboard shortcuts
-            else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
-                newTime = fracPlusSub("-", videoElem.currentTime, 5);
-                if(newTime <= 0) videoElem.currentTime = 0;
-                else videoElem.currentTime = newTime;
+            //     curTime = arvplayer.currentTime();
+            // }
+            // // avoid conflict with kaltura keyboard shortcuts
+            // else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
+            //     newTime = fracPlusSub("-", videoElem.currentTime, 5);
+            //     if(newTime <= 0) videoElem.currentTime = 0;
+            //     else videoElem.currentTime = newTime;
 
-                curTime = videoElem.currentTime;
-            }
-            console.log("rewind " + curTime);
+            //     curTime = videoElem.currentTime;
+            // }
+            // console.log("rewind " + curTime);
+            console.log("rewind " + time_change("-", 5));
         }
         //forward
         else if(keyInfo.pressedKey === "ArrowRight"){
@@ -600,25 +583,25 @@
             // else arvplayer.currentTime(newTime);
             // console.log("forward " + arvplayer.currentTime());
 
-            var curTime;
-            var newTime;
+            // var curTime;
+            // var newTime;
             
-            if (vidPlayerType == "arvplayer"){
-                newTime = fracPlusSub("+", arvplayer.currentTime(), 5);
-                if(newTime >= arvplayer.duration()) arvplayer.currentTime(arvplayer.duration());
-                else arvplayer.currentTime(newTime);
+            // if (vidPlayerType == "arvplayer"){
+            //     newTime = fracPlusSub("+", arvplayer.currentTime(), 5);
+            //     if(newTime >= arvplayer.duration()) arvplayer.currentTime(arvplayer.duration());
+            //     else arvplayer.currentTime(newTime);
 
-                curTime = arvplayer.currentTime();
-            }
-            //avoid conflict with kaltura keyboard shortcuts
-            else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
-                newTime = fracPlusSub("+", videoElem.currentTime, 5);
-                if(newTime >= videoElem.duration) videoElem.currentTime = videoElem.duration;
-                else videoElem.currentTime = newTime;
+            //     curTime = arvplayer.currentTime();
+            // }
+            // //avoid conflict with kaltura keyboard shortcuts
+            // else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
+            //     newTime = fracPlusSub("+", videoElem.currentTime, 5);
+            //     if(newTime >= videoElem.duration) videoElem.currentTime = videoElem.duration;
+            //     else videoElem.currentTime = newTime;
 
-                curTime = videoElem.currentTime;
-            }
-            console.log("forward " + curTime);
+            //     curTime = videoElem.currentTime;
+            // }
+            console.log("forward " + time_change("+", 5));
         }
         //volume up
         else if(keyInfo.pressedKey === "ArrowUp"){
