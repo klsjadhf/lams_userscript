@@ -41,4 +41,4 @@ Slide left / right -> forward / rewind
 - [x] Some keyboard shortcuts conflict with kaltura's shortcuts
 - [ ] Touch gestures not added for kaltura
 - [x] Spacebar not pausing/playing in fullscreen
-- [ ] Wrong playback speed shown in kaltura's ui
+- [x] Wrong playback speed shown in kaltura's ui

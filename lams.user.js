@@ -199,7 +199,7 @@
             // vidPlayer.sendNotification("doSwitch", { flavorIndex: i });
 
             // disable kaltura keyboard shortcuts
-            // console.log("disable kaltura kb shortcut");
+            console.log("disable kaltura kb shortcut");
             vidPlayer.plugins.keyboardShortcuts.enableKeyBindings = false;
             
             vidDoc = kaltura_iframe.document;
@@ -286,7 +286,7 @@
         videoSpdDis.innerHTML = videoElem.playbackRate.toFixed(1);
         speedContainer.appendChild(videoSpdDis);
         videoElem.addEventListener("ratechange", ()=>{ //update playback rate 
-            videoSpdDis.innerHTML = videoElem.playbackRate.toFixed(1); 
+            videoSpdDis.innerHTML = videoElem.playbackRate.toFixed(2); 
         });
 
         //slow down button
@@ -405,8 +405,10 @@
             pbRate = arvplayer.playbackRate();
         }
         else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
+            var kVid_spd_btn = kaltura_iframe.document.getElementsByClassName("playbackRateSelector")[0].getElementsByTagName("button")[0];
             videoElem.playbackRate = fracPlusSub(dir, videoElem.playbackRate, amt);
             pbRate = videoElem.playbackRate;
+            kVid_spd_btn.textContent = pbRate + "x";
         }
         return pbRate;
     }
