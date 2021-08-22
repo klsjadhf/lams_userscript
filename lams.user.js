@@ -192,8 +192,15 @@
             }
 
             // stuff for selecting highest quality for playback
+            // var kaltura_iframe = document.getElementById("kaltura_player_1595401760_ifp").contentWindow;
+            // var vidPlayer = kaltura_iframe.kaltura_player_1595401760;
             // vidPlayer.mediaElement.sources[i];
             // vidPlayer.switchSrc()
+            // vidPlayer.sendNotification("doSwitch", { flavorIndex: i });
+
+            // disable kaltura keyboard shortcuts
+            // console.log("disable kaltura kb shortcut");
+            vidPlayer.plugins.keyboardShortcuts.enableKeyBindings = false;
             
             vidDoc = kaltura_iframe.document;
         }
@@ -403,7 +410,8 @@
                     document.querySelector(".vjs-play-control").click();
                 }
                 else if(vidPlayerType == "kaltura"){
-                    if (keyInfo.pressedKey !== " ") //avoid conflict with kaltura keyboard shortcuts
+                    //avoid conflict with kaltura keyboard shortcuts
+                    if (keyInfo.pressedKey !== " " || vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false) 
                         vidPlayer.togglePlayback();
                 }
                 console.log("play/pause video");
@@ -415,7 +423,8 @@
                     arvplayer.playbackRate(fracPlusSub("-", arvplayer.playbackRate(), 0.5));
                     pbRate = arvplayer.playbackRate();
                 }
-                else if(vidPlayerType == "kaltura"){
+                else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
+                    // vidPlayer.sendNotification('playbackRateChangeSpeed', pbRate);
                     videoElem.playbackRate = fracPlusSub("-", videoElem.playbackRate, 0.5);
                     pbRate = videoElem.playbackRate;
                 }
@@ -428,7 +437,7 @@
                     arvplayer.playbackRate(fracPlusSub("+", arvplayer.playbackRate(), 0.5));
                     pbRate = arvplayer.playbackRate();
                 }
-                else if(vidPlayerType == "kaltura"){
+                else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
                     videoElem.playbackRate = fracPlusSub("+", videoElem.playbackRate, 0.5);
                     pbRate = videoElem.playbackRate;
                 }
@@ -465,7 +474,7 @@
                     arvplayer.muted(!arvplayer.muted());
                     muted = arvplayer.muted();
                 }
-                else if(vidPlayerType == "kaltura"){
+                else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
                     vidPlayer.toggleMute();
                     muted = vidPlayer.muted;
                 }
@@ -482,7 +491,7 @@
                     if(IsFullScreen()) arvplayer.exitFullscreen();
                     else document.querySelector(".arv_fullscreenButton").click();
                 }
-                else if(vidPlayerType == "kaltura"){
+                else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
                     var isFullScreen = vidPlayer.layoutBuilder.fullScreenManager.inFullScreen;
                     console.log("isFullScreen " + isFullScreen);
                     // if (isFullScreen){ //use kaltura shortcut for enter fullscreen, use this for exit fullscreen only
@@ -520,7 +529,7 @@
                 arvplayer.playbackRate(fracPlusSub("-", arvplayer.playbackRate(), 0.1));
                 pbRate = arvplayer.playbackRate();
             }
-            else if(vidPlayerType == "kaltura"){
+            else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
                 videoElem.playbackRate = fracPlusSub("-", videoElem.playbackRate, 0.1);
                 pbRate = videoElem.playbackRate;
             }
@@ -536,7 +545,7 @@
                 arvplayer.playbackRate(fracPlusSub("+", arvplayer.playbackRate(), 0.1));
                 pbRate = arvplayer.playbackRate();
             }
-            else if(vidPlayerType == "kaltura"){
+            else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
                 videoElem.playbackRate = fracPlusSub("+", videoElem.playbackRate, 0.1);
                 pbRate = videoElem.playbackRate;
             }
@@ -559,14 +568,14 @@
 
                 curTime = arvplayer.currentTime();
             }
-            //avoid conflict with kaltura keyboard shortcuts
-            // else if(vidPlayerType == "kaltura"){
-            //     newTime = fracPlusSub("-", videoElem.currentTime, 5);
-            //     if(newTime <= 0) videoElem.currentTime = 0;
-            //     else videoElem.currentTime = newTime;
+            // avoid conflict with kaltura keyboard shortcuts
+            else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
+                newTime = fracPlusSub("-", videoElem.currentTime, 5);
+                if(newTime <= 0) videoElem.currentTime = 0;
+                else videoElem.currentTime = newTime;
 
-            //     curTime = videoElem.currentTime;
-            // }
+                curTime = videoElem.currentTime;
+            }
             console.log("rewind " + curTime);
         }
         //forward
@@ -587,13 +596,13 @@
                 curTime = arvplayer.currentTime();
             }
             //avoid conflict with kaltura keyboard shortcuts
-            // else if(vidPlayerType == "kaltura"){
-            //     newTime = fracPlusSub("+", videoElem.currentTime, 5);
-            //     if(newTime >= videoElem.duration) videoElem.currentTime = videoElem.duration;
-            //     else videoElem.currentTime = newTime;
+            else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
+                newTime = fracPlusSub("+", videoElem.currentTime, 5);
+                if(newTime >= videoElem.duration) videoElem.currentTime = videoElem.duration;
+                else videoElem.currentTime = newTime;
 
-            //     curTime = videoElem.currentTime;
-            // }
+                curTime = videoElem.currentTime;
+            }
             console.log("forward " + curTime);
         }
         //volume up
@@ -608,10 +617,10 @@
                 vol = arvplayer.volume();
             }
             //avoid conflict with kaltura keyboard shortcuts
-            // else if(vidPlayerType == "kaltura"){
-            //     vidPlayer.setVolume(fracPlusSub("+", parseFloat(vidPlayer.volume), 0.05));
-            //     vol = vidPlayer.volume;
-            // }
+            else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
+                vidPlayer.setVolume(fracPlusSub("+", parseFloat(vidPlayer.volume), 0.05));
+                vol = vidPlayer.volume;
+            }
             console.log("volume up " + vol);
         }
         //volume down
@@ -626,10 +635,10 @@
                 vol = arvplayer.volume();
             }
             //avoid conflict with kaltura keyboard shortcuts
-            // else if(vidPlayerType == "kaltura"){
-            //     vidPlayer.setVolume(fracPlusSub("-", parseFloat(vidPlayer.volume), 0.05));
-            //     vol = vidPlayer.volume;
-            // }
+            else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
+                vidPlayer.setVolume(fracPlusSub("-", parseFloat(vidPlayer.volume), 0.05));
+                vol = vidPlayer.volume;
+            }
             console.log("volume down " + vol);
         }
     }
