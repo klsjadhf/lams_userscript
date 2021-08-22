@@ -397,6 +397,19 @@
         }
     }
 
+    function rate_change(dir, amt){
+        var pbRate;
+        if (vidPlayerType == "arvplayer"){
+            arvplayer.playbackRate(fracPlusSub(dir, arvplayer.playbackRate(), amt));
+            pbRate = arvplayer.playbackRate();
+        }
+        else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
+            videoElem.playbackRate = fracPlusSub(dir, videoElem.playbackRate, amt);
+            pbRate = videoElem.playbackRate;
+        }
+        return pbRate;
+    }
+
     function onKeypress(keyInfo){
         // var videoElem = document.querySelector("#Video1_html5_api");
         var newTime;
@@ -418,30 +431,32 @@
             }
             //slow down
             else if(keyInfo.pressedKey === ","){
-                var pbRate;
-                if (vidPlayerType == "arvplayer"){
-                    arvplayer.playbackRate(fracPlusSub("-", arvplayer.playbackRate(), 0.5));
-                    pbRate = arvplayer.playbackRate();
-                }
-                else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
-                    // vidPlayer.sendNotification('playbackRateChangeSpeed', pbRate);
-                    videoElem.playbackRate = fracPlusSub("-", videoElem.playbackRate, 0.5);
-                    pbRate = videoElem.playbackRate;
-                }
-                console.log("slow coarse " + pbRate);
+                // var pbRate;
+                // if (vidPlayerType == "arvplayer"){
+                //     arvplayer.playbackRate(fracPlusSub("-", arvplayer.playbackRate(), 0.5));
+                //     pbRate = arvplayer.playbackRate();
+                // }
+                // else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
+                //     // vidPlayer.sendNotification('playbackRateChangeSpeed', pbRate);
+                //     videoElem.playbackRate = fracPlusSub("-", videoElem.playbackRate, 0.5);
+                //     pbRate = videoElem.playbackRate;
+                // }
+                // console.log("slow coarse " + pbRate);
+                console.log("slow coarse " + rate_change("-", 0.5) );
             }
             //speed up
             else if(keyInfo.pressedKey === "."){
-                var pbRate;
-                if (vidPlayerType == "arvplayer"){
-                    arvplayer.playbackRate(fracPlusSub("+", arvplayer.playbackRate(), 0.5));
-                    pbRate = arvplayer.playbackRate();
-                }
-                else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
-                    videoElem.playbackRate = fracPlusSub("+", videoElem.playbackRate, 0.5);
-                    pbRate = videoElem.playbackRate;
-                }
-                console.log("fast coarse " + pbRate);
+                // var pbRate;
+                // if (vidPlayerType == "arvplayer"){
+                //     arvplayer.playbackRate(fracPlusSub("+", arvplayer.playbackRate(), 0.5));
+                //     pbRate = arvplayer.playbackRate();
+                // }
+                // else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
+                //     videoElem.playbackRate = fracPlusSub("+", videoElem.playbackRate, 0.5);
+                //     pbRate = videoElem.playbackRate;
+                // }
+                // console.log("fast coarse " + pbRate);
+                console.log("fast coarse " + rate_change("+", 0.5) );
             }
             //set saved playback speed
             else if(keyInfo.pressedKey === "s" || keyInfo.pressedKey === "S"){
