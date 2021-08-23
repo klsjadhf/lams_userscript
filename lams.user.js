@@ -562,34 +562,10 @@
         }
         //volume up
         else if(keyInfo.pressedKey === "ArrowUp"){
-            // var vol;
-
-            // if (vidPlayerType == "arvplayer"){
-            //     arvplayer.volume(fracPlusSub("+", parseFloat(arvplayer.volume()), 0.05));
-            //     vol = arvplayer.volume();
-            // }
-            // //avoid conflict with kaltura keyboard shortcuts
-            // else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
-            //     vidPlayer.setVolume(fracPlusSub("+", parseFloat(vidPlayer.volume), 0.05));
-            //     vol = vidPlayer.volume;
-            // }
-            // console.log("volume up " + vol);
             console.log("volume up " + vol_change("+", 0.05));
         }
         //volume down
         else if(keyInfo.pressedKey === "ArrowDown"){
-            // var vol;
-
-            // if (vidPlayerType == "arvplayer"){
-            //     arvplayer.volume(fracPlusSub("-", parseFloat(arvplayer.volume()), 0.05));
-            //     vol = arvplayer.volume();
-            // }
-            // //avoid conflict with kaltura keyboard shortcuts
-            // else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
-            //     vidPlayer.setVolume(fracPlusSub("-", parseFloat(vidPlayer.volume), 0.05));
-            //     vol = vidPlayer.volume;
-            // }
-            // console.log("volume down " + vol);
             console.log("volume down " + vol_change("-", 0.05));
         }
     }
