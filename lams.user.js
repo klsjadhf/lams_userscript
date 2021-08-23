@@ -351,7 +351,13 @@
         });
 
         //touch controls
-        videoElem.addEventListener("touchstart", (event)=>{
+        if (vidPlayerType == "arvplayer")
+            var playElem = videoElem;
+        else if(vidPlayerType == "kaltura")
+            var playElem = vidPlayer;
+
+        playElem.addEventListener("touchstart", (event)=>{
+        // videoElem.addEventListener("touchstart", (event)=>{
             if(event.targetTouches.length === 1){   //check only one finger touching screen  
                 // event.preventDefault(); //prevent scrolling               
                 touch_x = event.touches[0].clientX;
@@ -360,23 +366,20 @@
                 // console.log("x: " + String(x) + ", y: " + String(y));
             }
         });
-        videoElem.addEventListener("touchmove", (event)=>{
+        playElem.addEventListener("touchmove", (event)=>{
+        // videoElem.addEventListener("touchmove", (event)=>{
             if(event.targetTouches.length === 1){   //check only one finger touching screen  
                 event.preventDefault(); //prevent scrolling               
                 var x = event.touches[0].clientX - touch_x;
                 var y = event.touches[0].clientY - touch_y;
                 // console.log("x: " + String(x) + ", y: " + String(y));
                 if(Math.abs(x)>touch_thres && Math.abs(y)<touch_thres ){ //horizontal movement
-                    var newTime = arvplayer.currentTime() + (x/100);
-                    if(newTime <= 0) arvplayer.currentTime(0);                    
-                    else if(newTime >= arvplayer.duration()) arvplayer.currentTime(arvplayer.duration());
-                    else arvplayer.currentTime(newTime);
-                    console.log("hor x: " + String(x) + ", newTime: " + String(newTime) + ", time: " + String(arvplayer.currentTime()));
+                    var tDelta = x/100;
+                    console.log("hor x: " + String(x) + ", tDelta: " + String(tDelta) + ", time: " + time_change("+", tDelta));
                 }
                 else if(Math.abs(y)>touch_thres && Math.abs(x)<touch_thres ){ //vertical movement
-                    var new_vol = parseFloat(arvplayer.volume()) - (y/20000);
-                    arvplayer.volume(new_vol);
-                    console.log("ver y: " + String(y) + ", new vol: " + String(new_vol) + ", vol: "+ String(arvplayer.volume()));
+                    var vDelta = parseFloat( y/20000 );
+                    console.log("ver y: " + String(y) + ", vDelta: " + String(vDelta) + ", vol: " + vol_change("-", vDelta));
                 }
             }
             // console.log(event.changedTouches);

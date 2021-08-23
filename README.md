@@ -36,6 +36,7 @@ Slide left / right -> forward / rewind
 - [ ] Account for playback rate for forward/rewind
 - [ ] Change kaltura to use highest resolution 
 - [ ] Mouse scroll for forward/rewind
+- [ ] Increase player size
 
 # Known bugs
 - [ ] Old player based on arvplayer not maintained anymore
@@ -43,3 +44,5 @@ Slide left / right -> forward / rewind
 - [ ] Touch gestures not added for kaltura
 - [x] Spacebar not pausing/playing in fullscreen
 - [x] Wrong playback speed shown in kaltura's ui
+- [ ] Buttons not shown in fullscreen
+- [ ] Touchscreen doesn't work when video is loading
