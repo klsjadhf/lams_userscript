@@ -35,6 +35,7 @@ Slide left / right -> forward / rewind
 - [ ] Add pictures/video for installation guide  
 - [ ] Account for playback rate for forward/rewind
 - [ ] Change kaltura to use highest resolution 
+- [ ] Mouse scroll for forward/rewind
 
 # Known bugs
 - [ ] Old player based on arvplayer not maintained anymore
