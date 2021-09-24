@@ -11,6 +11,7 @@
 // @match        http*://lams.ntu.edu.sg/lams/*
 // @match        http*://ntulearn.ntu.edu.sg/webapps/blackboard/content/listContent.jsp*
 // @match        http*://*.ntu.edu.sg/aculearn-me/v9/studio/play.asp*
+// @match        http*://api.sg.kaltura.com/*
 // @grant        GM_download
 // @grant        GM_listValues
 // @grant        GM_deleteValue
@@ -30,6 +31,7 @@
     var videoOnLoadAdded = false;
     var vidPlayerType = "none";
     var kaltura_iframe = null;
+    var kDoc = null;
 
     if(document.URL.match(/https:\/\/lams\.ntu\.edu\.sg\/lams/)){
         //if user pressed key in wrong window, send to iframe
@@ -76,10 +78,17 @@
 
             // for new kaltura based videos
             if (document.getElementById("kaltura_player_1595401760_ifp")){
+            // if (document.getElementsByTagName("iframe")[0]){
+                // need to test for kaltura here?
                 console.log("found kaltura iframe")
 
                 kaltura_iframe = document.getElementById("kaltura_player_1595401760_ifp").contentWindow;
+                // kaltura_iframe = document.getElementsByTagName("iframe")[0].contentWindow;
                 var vid = kaltura_iframe.kaltura_player_1595401760;
+                kDoc = kaltura_iframe.document;
+                // var vid = kDoc.evaluate("//video/following-sibling::div[2]", kDoc, null, XPathResult.ANY_TYPE, null).iterateNext();
+                // var vid = kDoc.getElementsByClassName("mwEmbedPlayer")[0];
+                var vid = kDoc.getElementsByTagName("video")[0];
 
                 // console.log("vid");
                 // console.log(vid);
@@ -103,6 +112,28 @@
                     document.querySelector("iframe").focus();
                     console.log("set focus")
                 }, 500);
+            }
+        }
+
+        // another variant of kaltura
+        else if (document.URL.match(/https:\/\/api\.sg\.kaltura\.com/)){
+            console.log("kaltura 2")
+            kaltura_iframe = window;
+            kDoc = document;
+
+            var vid = kDoc.getElementsByTagName("video")[0];
+            // console.log("vid");
+            // console.log(vid);
+
+            if ( (videoOnLoadAdded === false) && vid){
+                vidPlayerType = "kaltura"
+
+                console.log("add video load listener");
+                videoOnLoadAdded = true;
+                // vid.addEventListener("loadstart", kaltura_onLoad);
+                vid.addEventListener("loadstart", videoOnload);
+
+                window.setInterval( ()=>vid.focus(), 500);
             }
         }
 
@@ -176,8 +207,13 @@
             vidDoc = document;
         }
         else if(vidPlayerType == "kaltura"){
-            videoElem = kaltura_iframe.document.getElementById("pid_kaltura_player_1595401760");
-            vidPlayer = kaltura_iframe.kaltura_player_1595401760;
+            // videoElem = kaltura_iframe.document.getElementById("pid_kaltura_player_1595401760");
+            videoElem = kDoc.getElementsByTagName("video")[0];
+            // vidPlayer = kaltura_iframe.kaltura_player_1595401760;
+            vidPlayer = kDoc.getElementsByClassName("mwEmbedPlayer")[0];
+
+            console.log(videoElem);
+            console.log(vidPlayer);
 
             videoName = vidPlayer.kalturaPlayerMetaData.name;
 
