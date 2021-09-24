@@ -78,16 +78,11 @@
 
             // for new kaltura based videos
             if (document.getElementById("kaltura_player_1595401760_ifp")){
-            // if (document.getElementsByTagName("iframe")[0]){
-                // need to test for kaltura here?
                 console.log("found kaltura iframe")
 
                 kaltura_iframe = document.getElementById("kaltura_player_1595401760_ifp").contentWindow;
-                // kaltura_iframe = document.getElementsByTagName("iframe")[0].contentWindow;
-                var vid = kaltura_iframe.kaltura_player_1595401760;
+
                 kDoc = kaltura_iframe.document;
-                // var vid = kDoc.evaluate("//video/following-sibling::div[2]", kDoc, null, XPathResult.ANY_TYPE, null).iterateNext();
-                // var vid = kDoc.getElementsByClassName("mwEmbedPlayer")[0];
                 var vid = kDoc.getElementsByTagName("video")[0];
 
                 // console.log("vid");
