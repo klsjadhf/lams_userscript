@@ -12,6 +12,7 @@
 // @match        http*://ntulearn.ntu.edu.sg/webapps/blackboard/content/listContent.jsp*
 // @match        http*://*.ntu.edu.sg/aculearn-me/v9/studio/play.asp*
 // @match        http*://api.sg.kaltura.com/*
+// @match        http*://ntulearnv.ntu.edu.sg/media/t/*
 // @grant        GM_download
 // @grant        GM_listValues
 // @grant        GM_deleteValue
@@ -132,6 +133,32 @@
             }
         }
 
+        //kaltura from ntulean site (open in new tab)
+        else if (document.URL.match(/https:\/\/ntulearnv\.ntu\.edu\.sg\/media\/t/)){ 
+            console.log("kaltura 3")
+            if (document.getElementById("kplayer_ifp")){
+                kaltura_iframe = document.getElementById("kplayer_ifp");
+                if (kaltura_iframe.contentDocument){
+                    kDoc = kaltura_iframe.contentDocument;
+
+                    var vid = kDoc.getElementById("pid_kplayer");
+                    // console.log("vid");
+                    // console.log(vid);
+
+                    if ( (videoOnLoadAdded === false) && vid){
+                        vidPlayerType = "kaltura"
+
+                        console.log("add video load listener");
+                        videoOnLoadAdded = true;
+                        // vid.addEventListener("loadstart", kaltura_onLoad);
+                        vid.addEventListener("loadstart", videoOnload);
+
+                        // window.setInterval( ()=>vid.focus(), 500);
+                    }
+                }
+            }
+        }
+
         //for video player in iframe
         else if(document.URL.match(/https:\/\/presentur\.ntu\.edu\.sg\/aculearn-idm\/v8\/studio\/embed\.asp/) || document.URL.match(/ntu\.edu\.sg\/aculearn-me\/v9\/studio\/play\.asp/)){
             //remove annoying box
@@ -212,12 +239,13 @@
 
             videoName = vidPlayer.kalturaPlayerMetaData.name;
 
-            // find source with highest resolution, assume is last item in array without data-flavorid
-            // with data-flavorid is playlist type
+            // find source with highest resolution, assume is last item in array without data-flavorid or of flavour iphone
+            // others are playlist type
             for (let i=vidPlayer.kalturaFlavors.length-1; i>=0; i--){
                 console.log(vidPlayer.kalturaFlavors[i]["data-flavorid"]);
-                if (vidPlayer.kalturaFlavors[i]["data-flavorid"] === undefined){
+                if ( [undefined, "iPhone"].includes(vidPlayer.kalturaFlavors[i]["data-flavorid"]) ){
                     videoSrc = vidPlayer.kalturaFlavors[i].src;
+                    console.log(videoSrc)
                     break;
                 }
             }
@@ -233,7 +261,8 @@
             console.log("disable kaltura kb shortcut");
             vidPlayer.plugins.keyboardShortcuts.enableKeyBindings = false;
             
-            vidDoc = kaltura_iframe.document;
+            // vidDoc = kaltura_iframe.document;
+            vidDoc = kDoc
         }
 
         var touch_x = 0; //for touch events
@@ -439,7 +468,8 @@
             pbRate = arvplayer.playbackRate();
         }
         else if(vidPlayerType == "kaltura" && vidPlayer.plugins.keyboardShortcuts.enableKeyBindings === false){
-            var kVid_spd_btn = kaltura_iframe.document.getElementsByClassName("playbackRateSelector")[0].getElementsByTagName("button")[0];
+            // var kVid_spd_btn = kaltura_iframe.document.getElementsByClassName("playbackRateSelector")[0].getElementsByTagName("button")[0];
+            var kVid_spd_btn = kDoc.getElementsByClassName("playbackRateSelector")[0].getElementsByTagName("button")[0];
             videoElem.playbackRate = fracPlusSub(dir, videoElem.playbackRate, amt);
             pbRate = videoElem.playbackRate;
             kVid_spd_btn.textContent = pbRate + "x";
