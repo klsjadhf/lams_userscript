@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         lams
 // @namespace    https://github.com/klsjadhf/lams_userscript
-// @version      1.5.0
+// @version      1.5.1
 // @description  change lams video speed and download video button
 // @author       klsjadhf
 // @homepage     https://github.com/klsjadhf/lams_userscript
@@ -229,9 +229,7 @@
             vidDoc = document;
         }
         else if(vidPlayerType == "kaltura"){
-            // videoElem = kaltura_iframe.document.getElementById("pid_kaltura_player_1595401760");
             videoElem = kDoc.getElementsByTagName("video")[0];
-            // vidPlayer = kaltura_iframe.kaltura_player_1595401760;
             vidPlayer = kDoc.getElementsByClassName("mwEmbedPlayer")[0];
 
             console.log(videoElem);
@@ -261,7 +259,6 @@
             console.log("disable kaltura kb shortcut");
             vidPlayer.plugins.keyboardShortcuts.enableKeyBindings = false;
             
-            // vidDoc = kaltura_iframe.document;
             vidDoc = kDoc
         }
 

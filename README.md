@@ -42,7 +42,7 @@ Slide left / right -> forward / rewind
 - [ ] Old player based on arvplayer not maintained anymore
 - [x] Some keyboard shortcuts conflict with kaltura's shortcuts
 - [ ] Touch gestures not added for kaltura
-- [x] Spacebar not pausing/playing in fullscreen
-- [x] Wrong playback speed shown in kaltura's ui
 - [ ] Buttons not shown in fullscreen
 - [ ] Touchscreen doesn't work when video is loading
+- [ ] Video in ntulearn sometimes goes back to 1x speed
+- [ ] Download buton lag using tampermonkey and firefox
