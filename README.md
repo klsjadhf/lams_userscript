@@ -1,5 +1,6 @@
 # Description
-Adds a download button and keyboard shortcuts to NTU LAMS videos.
+Adds a download button and keyboard shortcuts to NTU LAMS videos.  
+Fix other small problems such as cannot exit fullscreen with shortcut key
 
 # Installation
 1. Install a userscript manager such as [Tampermonkey](https://www.tampermonkey.net/).
@@ -28,16 +29,20 @@ D | Download video
 Slide up / down -> volume  
 Slide left / right -> forward / rewind
 
-# Future features
-- [x] Add support for videos in ntulearn
+# ToDo
 - [ ] Set custom keyboard shortcuts and default playback rate
-- [x] Gesture support for touchscreens?
-- [x] Download shortcut key
+- [x] Gesture support for touchscreens (not added in kaltura)
 - [ ] Add pictures/video for installation guide  
 - [ ] Account for playback rate for forward/rewind
+- [ ] Change kaltura to use highest resolution 
+- [ ] Mouse scroll for forward/rewind
+- [ ] Increase player size
 
 # Known bugs
-- [ ] Some subjects cannot get correct video name
-- [ ] Video player changed to kaltura everything is broken now :(
-
-If having download problems with tampermonkey V4.11.6117 and firefox, go to tampermonkey settings and change config mode to advanced. Then scroll down to "download mode" and change to browser api. After that, restart tampermonkey.
+- [ ] Old player based on arvplayer not maintained anymore
+- [x] Some keyboard shortcuts conflict with kaltura's shortcuts
+- [ ] Touch gestures not added for kaltura
+- [ ] Buttons not shown in fullscreen
+- [ ] Touchscreen doesn't work when video is loading
+- [ ] Video in ntulearn sometimes goes back to 1x speed
+- [ ] Download buton lag using tampermonkey and firefox
